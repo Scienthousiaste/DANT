@@ -1,0 +1,128 @@
+.warhol {
+	width: 450px;
+	margin: 15vh auto 15vh auto;
+}
+
+.square {
+	display: block;
+	float: left;
+	width: 150px;
+	height: 150px;
+	background-color: blue;
+	text-align: center;
+}
+
+.fa-linux {
+	margin: 20px;
+	font-size: 100px;
+}
+
+#sq1 {
+	background-color: red;
+}
+#sq1 .fa-linux {
+	color: Navy;
+}
+#sq1:hover {
+	background-color: Navy;
+}
+#sq1:hover .fa-linux {
+	color: red;
+}
+
+#sq2 {
+	background-color: Blue;
+}
+#sq2 .fa-linux {
+	color: Gold;
+}
+#sq2:hover {
+	background-color: Gold;
+}
+#sq2:hover .fa-linux {
+	color: Blue;
+}
+#sq3 {
+	background-color: DeepPink;
+}
+#sq3 .fa-linux {
+	color: SandyBrown;
+}
+#sq3:hover {
+	background-color: SandyBrown;
+}
+#sq3:hover .fa-linux {
+	color: DeepPink;
+}
+#sq4 {
+	background-color: LimeGreen;
+}
+#sq4 .fa-linux {
+	color: LightSalmon;
+}
+#sq4:hover {
+	background-color: LightSalmon;
+}
+#sq4:hover .fa-linux {
+	color: LimeGreen;
+}
+#sq5 {
+	background-color: Yellow;
+}
+#sq5 .fa-linux {
+	color: Fuchsia;
+}
+#sq5:hover {
+	background-color: Fuchsia;
+}
+#sq5:hover .fa-linux {
+	color: Yellow;
+}
+#sq6 {
+	background-color: Chocolate;
+}
+#sq6 .fa-linux {
+	color: Green;
+}
+#sq6:hover {
+	background-color: Green;
+}
+#sq6:hover .fa-linux {
+	color: Chocolate;
+}
+#sq7 {
+	background-color: #fc9dfd;
+}
+#sq7 .fa-linux {
+	color: #55d965;
+}
+#sq7:hover {
+	background-color: #55d965;
+}
+#sq7:hover .fa-linux {
+	color: #fc9dfd;
+}
+#sq8 {
+	background-color: #9ba6fc;
+}
+#sq8 .fa-linux {
+	color: #fd94c5;
+}
+#sq8:hover {
+	background-color: #fd94c5;
+}
+#sq8:hover .fa-linux {
+	color: #9ba6fc;
+}
+#sq9 {
+	background-color: #e98d3d;
+}
+#sq9 .fa-linux {
+	color: #5360ef;
+}
+#sq9:hover {
+	background-color: #5360ef;
+}
+#sq9:hover .fa-linux {
+	color: #e98d3d;
+}
