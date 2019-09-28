@@ -1,0 +1,73 @@
+body {
+
+}
+
+.leftPanel {
+	background-color: #f6f6f6;
+	width: 15%;
+	float: left;
+	border-right: solid 1px lightgray;
+	height: 1200px;
+}
+main {
+	background-color: white;
+	display: inline-block;
+	width: 80%;
+	padding-left : 20px;
+}
+
+#logo {
+	width: 80%;
+}
+
+.tdm {
+	border: 1px solid #a2a9b1;
+	float: left;
+	background-color: #f8f9fa;
+	padding: 10px;
+}
+
+.tdmtitle {
+	font-weight: bold;
+	text-align: center;
+}
+
+.infoboxtitle {
+	font-size: 20px;
+	font-weight: bold;
+	font-style: italic;
+	text-align: center;
+	padding: 10px 0px 20px 0px;
+}
+
+.infobox {
+	float: right;
+	width: 250px;
+	border: 1px solid #a2a9b1;
+	background-color: #f8f9fa;
+	padding: 10px;
+	margin: 10px 0px 10px 20px;
+}
+
+.infobox img {
+	max-width: 100%;
+}
+.infobox table td {
+	text-align: right;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h1, h2, h3 {
+	border-bottom: solid 1px gray;
+}
+h3 {
+	border-bottom-style: dotted;
+}
+
