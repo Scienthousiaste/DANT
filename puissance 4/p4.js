@@ -1,12 +1,12 @@
+var MAX_ROW = 5;
+var MAX_COL = 6;
+var COL_LENGTH = 6;
+
 var currentPlayer = 1;
 var columnsArray = document.querySelectorAll('.column');
-var cases = document.querySelectorAll('.column .case');
+var squares = document.querySelectorAll('.column .square');
 var game;
 var gameOver;
-
-for (var i = 0; i < columnsArray.length; i++) {
-	columnsArray[i].addEventListener('click', getPlayOnColumnFunction(i));
-}
 
 function initGame() {
 	game = [[0, 0, 0, 0, 0, 0], 
@@ -17,128 +17,62 @@ function initGame() {
 			[0, 0, 0, 0, 0, 0], 
 			[0, 0, 0, 0, 0, 0]];
 
-	for (var i = 0; i < cases.length; i++) {
-		cases[i].setAttribute('class', 'case');
+	for (var i = 0; i < squares.length; i++) {
+		squares[i].setAttribute('class', 'square');
 	}
 
-	document.querySelector('.message').textContent = "";
+	document.querySelector('.gameOverMessage').textContent = "";
+	document.querySelector('.playerMessage').innerHTML = "Tour du joueur <span id='playingColor'>rouge</span>";
+	currentPlayer = 1;
 	gameOver = false;
 }
 
 initGame();
 
+for (var i = 0; i < columnsArray.length; i++) {
+	columnsArray[i].addEventListener('click', getPlayOnColumnFunction(i));
+}
+
 function getPlayOnColumnFunction(i) {
 	return function() {
-		if (!gameOver) {
-			console.log(((currentPlayer == 1) ? 'red' : 'yellow') + " player plays on column " + i);
-			for (var j = 5; j >= 0; j--) {
-				if (game[i][j] == 0) {
-					var player = currentPlayer;
-					currentPlayer = ((currentPlayer == 1) ? 2 : 1);
-					game[i][j] = player;
-					var classes = 'case ' + ((player == 1) ? 'red' : 'yellow');
-					cases[i * 6 + j].setAttribute('class', classes);
+		playOnColumn(i);
+	}
+}
 
-					if (four_connected(i, j, player)) {
-						gameEnd(player);
-					}
-					return ;
+function playOnColumn(col) {
+	if (!gameOver) {
+		for (var row = MAX_ROW; row >= 0; row--) {
+			if (game[col][row] == 0) { //case inoccupée
+
+				// On modifie notre tableau représentant l'état du jeu
+				var player = currentPlayer;
+				game[col][row] = player;
+				changePlayer();
+
+				// On change le HTML en ajoutant une classe à la position jouée
+				var classes = 'square ' + ((player == 1) ? 'red' : 'yellow');
+				squares[col * COL_LENGTH + row].setAttribute('class', classes);
+
+				// On vérifie si la partie est terminée
+				if (fourConnected(col, row, player)) {
+					gameEnd(player);
 				}
+				return ;
 			}
 		}
 	}
 }
 
-function four_connected(col, row, player) {
-	return (four_in_a_row(col, row, player)
-		|| four_in_a_column(col, row, player)
-		|| four_in_a_diagonal(col, row, player));
-}
-
-function four_in_a_row(col, row, player) {
-	var min = (col - 3 < 0) ? 0 : col - 3;
-	var max = (col + 3 > 6) ? 6 : col + 3;
-	var acc = 0;
-
-	for (var i = min; i <= max; i++) {
-		if (game[i][row] == player) {
-			acc++;
-			if (acc == 4) return true;
-		}
-		else {
-			acc = 0;
-		}
-	}
-	return false;
-}
-
-function four_in_a_column(col, row, player) {
-	var max = ((row + 3 > 5) ? 5 : row + 3);
-	var acc = 0;
-
-	for (var i = max; i >= row; i--) {
-		if (game[col][i] == player) {
-			acc++;
-			if (acc == 4) return true;
-		}
-		else {
-			acc = 0;
-		}
-	}
-	return false;
-}
-
-function four_in_a_diagonal(col, row, player) {
-	var col_min = col - 3;
-	var col_max = col + 3;
-	var row_min = row - 3;
-	var row_max = row + 3;
-
-	// lower left -> upper right diagonal
-	var acc = 0;
-	var x = col_min;
-	var y = row_max;
-
-	while (x <= col_max && y >= row_min) {
-		if (!(x < 0 || y < 0 || x > 6 || y > 5))
-		{
-			if (game[x][y] == player) {
-				acc++;
-				if (acc == 4) return true;
-			}
-			else {
-				acc = 0;
-			}
-		}
-		x++;
-		y--;
-	}
-
-	// lower right -> upper left diagonal
-	acc = 0;
-	x = col_max;
-	y = row_max;
-	
-	while (x >= col_min && y >= row_min) {
-		if (!(x < 0 || y < 0 || x > 6 || y > 5))
-		{
-			if (game[x][y] == player) {
-				acc++;
-				if (acc == 4) return true;
-			}
-			else {
-				acc = 0;
-			}
-		}
-		x--;
-		y--;
-	}
-	return false;
+function changePlayer() {
+	currentPlayer = ((currentPlayer == 1) ? 2 : 1);
+	var playerColor = ((currentPlayer == 1) ? "rouge" : "jaune");
+	document.querySelector('#playingColor').textContent = playerColor;
 }
 
 function gameEnd(player) {
 	var message = "Le joueur " + ((player == 1) ? 'rouge' : 'jaune') + ' a gagné la partie !';
-	document.querySelector('.message').textContent = message;
+	document.querySelector('.gameOverMessage').textContent = message;
+	document.querySelector('.playerMessage').innerHTML = "Fin de la partie";
 	gameOver = true;
 }
 
