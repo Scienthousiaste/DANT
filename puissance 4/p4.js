@@ -18,7 +18,7 @@ function initGame() {
 			[0, 0, 0, 0, 0, 0]];
 
 	for (var i = 0; i < squares.length; i++) {
-		squares[i].setAttribute('class', 'square');
+		squares[i].className = 'square';
 	}
 
 	document.querySelector('.gameOverMessage').textContent = "";
@@ -50,8 +50,8 @@ function playOnColumn(col) {
 				changePlayer();
 
 				// On change le HTML en ajoutant une classe à la position jouée
-				var classes = 'square ' + ((player == 1) ? 'red' : 'yellow');
-				squares[col * COL_LENGTH + row].setAttribute('class', classes);
+				var newClass = ((player == 1) ? 'red' : 'yellow');
+				squares[col * COL_LENGTH + row].className += ' ' + newClass;
 
 				// On vérifie si la partie est terminée
 				if (fourConnected(col, row, player)) {

@@ -19,6 +19,7 @@ body {
 .column {
 	display: flex;
 	flex-direction: column;
+	cursor: pointer;
 	border: 3px solid #2ac;
 }
 
