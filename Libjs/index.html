@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test Librairie JS</title>
+		<meta charset="UTF-8">
+		<script src="lib.js"></script>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<h1>Testons notre super librairie front-end</h1>
+
+		<p id='p1'>
+			Ce paragraphe a pour id p1
+		</p>
+
+		<p id='p2'>
+			Ce paragraphe a pour id p2
+		</p>
+
+		<div class='clickable' onclick="select('p').addClass('underlined');">
+			<span class='code'>onclick="select('p').addClass('underlined');"</span><br>
+			Si vous cliquez sur ce texte, les paragraphes auront la classe "underlined"
+		</div>
+		<div class='clickable' onclick="select('.clickable').removeClass('clickable');">
+			<span class='code'>onclick="select('.clickable').removeClass('clickable');"</span><br>
+			Si vous cliquez sur ce texte, plus aucun élément n'aura la classe "clickable"
+		</div>
+		<div class='clickable' onclick="select('.code').changeText('était du code');">
+			<span class='code'>onclick="select('.code').changeText('était du code');"</span><br>
+			Si vous cliquez sur ce texte, les morceaux de code auront pour texte "était du code"
+		</div>
+
+	</body>
+</html>

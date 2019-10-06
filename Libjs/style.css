@@ -1,0 +1,30 @@
+body {
+	margin: 0 auto;
+	max-width: 50em;
+	font-family: Roboto, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	padding: 2em 1em;
+
+	color: #eeeeee;
+	background-color: #393e46;
+}
+
+h1 {
+	text-align: center;
+}
+
+.underlined {
+	text-decoration: underline;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+div {
+	margin: 20px 0px;
+}
+
+.code {
+	font-family: Courier;
+}
