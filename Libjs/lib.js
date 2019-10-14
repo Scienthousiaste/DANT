@@ -29,8 +29,8 @@ var select = (function() {
 		return this;
 	}
 
-	function select(str) {
-		var selectedElems = document.querySelectorAll(str);
+	function select(queryString) {
+		var selectedElems = document.querySelectorAll(queryString);
 		selectedElems.addClass = addClass;
 		selectedElems.removeClass = removeClass;
 		selectedElems.changeText = changeText;
