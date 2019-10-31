@@ -7,24 +7,24 @@ const mongoose = require('mongoose');
 const uri = "mongodb+srv://tbehra:"+pwd+"@dant-kkn0r.mongodb.net/Test?retryWrites=true&w=majority";
 
 
-const courseSchema = new mongoose.Schema({
+const docSchema = new mongoose.Schema({
 	name: String,
 	author: String,
 	tags: [ String ],
 	data: { type: Date, default: Date.now },
 	isPublished: Boolean
 });
-const Course = mongoose.model('Course', courseSchema);
+const Doc = mongoose.model('Doc', docSchema);
 
-async function createCourse() {
-	const course = new Course({
+async function createTest() {
+	const doc = new Doc({
 		name: 'Cours de MongoDB',
-		author: 'Timothée BEHRA',
+		author: 'tbehra',
 		tags: ['node', 'backend'],
 		isPublished: true
 	})
 
-	const result = await course.save();
+	const result = await doc.save();
 	console.log(result);
 }
 
@@ -33,7 +33,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(function() {
 		console.log('now connected to mongodb!');
 
-		createCourse();
+		createDoc();
 	})
 	.catch(function (err) {
 		console.log ("Erreur lors de la connection à mongodb : ", err);
