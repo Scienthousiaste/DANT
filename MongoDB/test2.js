@@ -1,10 +1,13 @@
+
+
 const __PASSWORD__ = require('./config/pwd.js');
 
-const pwd = encodeURIComponent(__PASSWORD__);
+//const pwd = encodeURIComponent(__PASSWORD__);
+const pwd = encodeURIComponent("DANT_macaroni");
 
 const mongoose = require('mongoose');
 
-const uri = "mongodb+srv://tbehra:"+pwd+"@dant-kkn0r.mongodb.net/Test?retryWrites=true&w=majority";
+const uri = "mongodb+srv://user_project_1:"+pwd+"@dant-kkn0r.mongodb.net/project1?retryWrites=true&w=majority";
 
 
 const docSchema = new mongoose.Schema({
