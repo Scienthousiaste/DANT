@@ -2,7 +2,7 @@ var ajax = (function() {
 
 	function get(uri, data, success, error) {
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', uri + '?' + param(data));l
+		xhr.open('GET', uri + '?' + param(data));
 		xhr.onload = function() {
 			if (xhr.status === 200) {
 				if (success) {
