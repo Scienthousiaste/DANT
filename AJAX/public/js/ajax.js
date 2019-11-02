@@ -6,13 +6,12 @@ var ajax = (function() {
 		xhr.onload = function() {
 			if (xhr.status === 200) {
 				if (success) {
-					//console.log(xhr);
 					success(xhr.responseText);
 				}
 			}
 			else {
 				if (error) {
-					error();
+					error(xhr);
 				}
 			}
 		};
@@ -26,13 +25,12 @@ var ajax = (function() {
 		xhr.onload = function() {
 			if (xhr.status === 200) {
 				if (success) {
-					//console.log(xhr);
 					success(xhr.responseText);
 				}
 			}
 			else {
 				if (error) {
-					error();
+					error(xhr);
 				}
 			}
 		};
