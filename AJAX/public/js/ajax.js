@@ -1,28 +1,40 @@
 var ajax = (function() {
 
-	function get(uri, data) {
+	function get(uri, data, success, error) {
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', uri + '?' + param(data));
+		xhr.open('GET', uri + '?' + param(data));l
 		xhr.onload = function() {
-
-			console.log('xhr: ', xhr);
-			
-			// if (xhr.status === 200) {
-			// 	alert('User\'s name is ' + xhr.responseText);
-			// }
-			// else {
-			// 	alert('Request failed.  Returned status of ' + xhr.status);
-			// }
+			if (xhr.status === 200) {
+				if (success) {
+					//console.log(xhr);
+					success(xhr.responseText);
+				}
+			}
+			else {
+				if (error) {
+					error();
+				}
+			}
 		};
 		xhr.send();
 	}
 
-	function post(uri, data) {
+	function post(uri, data, success, error) {
 		xhr = new XMLHttpRequest();
 		xhr.open('POST', uri);
 		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		xhr.onload = function() {
-		    console.log('xhr: ', xhr);
+			if (xhr.status === 200) {
+				if (success) {
+					//console.log(xhr);
+					success(xhr.responseText);
+				}
+			}
+			else {
+				if (error) {
+					error();
+				}
+			}
 		};
 		xhr.send(param(data));
 	}
