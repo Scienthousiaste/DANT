@@ -1,0 +1,51 @@
+var ajax = (function() {
+
+	function get(uri, data) {
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', uri + '?' + param(data));
+		xhr.onload = function() {
+
+			console.log('xhr: ', xhr);
+			
+			// if (xhr.status === 200) {
+			// 	alert('User\'s name is ' + xhr.responseText);
+			// }
+			// else {
+			// 	alert('Request failed.  Returned status of ' + xhr.status);
+			// }
+		};
+		xhr.send();
+	}
+
+	function post(uri, data) {
+		xhr = new XMLHttpRequest();
+		xhr.open('POST', uri);
+		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhr.onload = function() {
+		    console.log('xhr: ', xhr);
+		};
+		xhr.send(param(data));
+	}
+
+	function getAjaxLib() {
+		var ajax = {};
+		ajax.get = get;
+		ajax.post = post;
+
+		return (ajax);
+	}
+	return getAjaxLib();
+})();
+
+function param(object) {
+    var encodedString = '';
+    for (var prop in object) {
+        if (object.hasOwnProperty(prop)) {
+            if (encodedString.length > 0) {
+                encodedString += '&';
+            }
+            encodedString += encodeURI(prop + '=' + object[prop]);
+        }
+    }
+    return encodedString;
+}
