@@ -19,7 +19,7 @@ changeNameButton.on('click', function() {
 	var animalType = select('#animalType')[0].value;
 	var newNames;
 	if (animalType == 'felines') {
-		newNames = ['Cat', 'Cheetah', 'Lion'];
+		newNames = ['Grumpy Cat', 'Bored Cheetah', 'Sad Lion'];
 	}
 	else if (animalType == 'primates') {
 		newNames = ['Monk Monkey', 'Eye Monkey', 'Tail Monkey'];
