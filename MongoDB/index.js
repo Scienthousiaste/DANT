@@ -1,11 +1,24 @@
+/*
+	Créer un dossier config, contenant un fichier pwd.js, 
+	et mettre dans ce fichier js uniquement la ligne suivante : 
+			module.exports = "__votre_mot_de_passe__";
+
+	(en remplaçant __votre_mot_de_passe__ par le mot de passe fourni)
+*/
+
 const __PASSWORD__ = require('./config/pwd.js');
+const project_number = 0; //Changer ici par votre numéro de projet
+
+// Ne pas changer ces lignes
 
 const pwd = encodeURIComponent(__PASSWORD__);
-
+const project_name = 'project' + project_number;
+const user_name = 'user_project_' + project_number;
 const mongoose = require('mongoose');
-
-const uri = "mongodb+srv://tbehra:"+pwd+"@dant-kkn0r.mongodb.net/Test?retryWrites=true&w=majority";
-
+const uri = "mongodb+srv://" + user_name + ":" + pwd 
+		+ "@dant-kkn0r.mongodb.net/"
+		+ project_name + "?retryWrites=true&w=majority";
+//
 
 const docSchema = new mongoose.Schema({
 	name: String,
@@ -18,9 +31,9 @@ const Doc = mongoose.model('Doc', docSchema);
 
 async function createDoc() {
 	const doc = new Doc({
-		name: 'Doc test from 42',
-		author: 'tbehra',
-		tags: ['node', 'backend'],
+		name: 'Document test',
+		author: user_name,
+		tags: ['test'],
 		isPublished: true
 	})
 
@@ -28,11 +41,9 @@ async function createDoc() {
 	console.log(result);
 }
 
-
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(function() {
 		console.log('now connected to mongodb!');
-
 		createDoc();
 	})
 	.catch(function (err) {
@@ -40,14 +51,3 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 	})
 
  
-
-
-
-// const MongoClient = require('mongodb').MongoClient;
-// const uri = "mongodb+srv://tbehra:<password>@dant-kkn0r.mongodb.net/test?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
