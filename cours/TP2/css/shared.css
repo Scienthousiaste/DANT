@@ -1,0 +1,17 @@
+
+.left {
+    text-align: left;
+}
+
+.reveal ul.leftList {
+	display: flex;
+	flex-direction: column;
+ 	align-items: flex-start;
+}
+.reveal ul.leftList li {
+	padding-left: 20px;
+}
+
+code.bash {
+    color: #ddd;
+}

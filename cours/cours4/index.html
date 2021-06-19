@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>JavaScript</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.0.13/css/all.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/js/all.min.js"></script>
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+		<link rel="stylesheet" href="../css/shared.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>JavaScript 2</h1>
+					<p>Écrire votre librairie de fonctions</p>
+				</section>
+				<section>
+					<h2>Code du puissance 4</h2>
+					<p><a href="https://github.com/Scienthousiaste/DANT" target="_blank">à récupérer ici</a></p>
+					<p><a href="https://timothee.dev/p4/p4.html" target="_blank">à tester là</a></p>
+				</section>
+				<section>
+					<h3>Le HTML</h3>
+					<p class="left">Contenu du HTML :</p>
+					<ul class="leftlist">
+						<li>2 balises p contenant des messages, un pour le joueur actuel, un pour le message de fin de partie</li>
+						<li>Le tableau de jeu proprement dit (<span class="mono">#p4</span>), contenant 7 div <span class="mono">.column</span>, constitués de 6 div <span class="mono">.square</span> chacun</li>
+						<li>Un div cliquable <span class="mono">.restart</span></li>
+						<li>Inclusion d'un fichier style.css dans le head, et de 2 fichiers javascript à la fin du body</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Créer des éléments HTML</h3>
+					<p class="left">Il aurait été possible de générer le plateau (#p4) en JS à l'aide des méthodes <a href="https://developer.mozilla.org/fr/docs/Web/API/Document/createElement" target="_blank"><span class="mono">document.createElement</span> et <span class="mono">element.append</span></a> :</p>
+
+<pre><code class="hljs js">var p4 = document.getElementById('p4');
+var NB_COL = 7;
+var NB_ROW = 6;
+
+for (var c = 0; c &lt; NB_COL; c++) {
+  var newCol = document.createElement('div');
+  newCol.className = 'column';
+  for (var r = 0; r &lt; NB_ROW; r++) {
+    var newSq = document.createElement('div');
+    newSq.className = 'square';
+    newCol.append(newSq);
+  }
+  p4.append(newCol);
+}</code></pre>
+				</section>
+				<section>
+					<h3>Le CSS du plateau de jeu</h3>
+					<ul class="leftlist">
+						<li>L'espace de jeu est constitué d'une ligne (<span class="mono">display: flex; flex-direction: row;</span>) de 7 colonnes</li>
+						<li>Chaque colonne est une colonne (<span class="mono">display: flex; flex-direction: column;</span>) de 6 cases</li>
+						<li>Les éléments de classe <span class="mono">square</span>, nos cases, ont la propriété <span class="mono">border-radius: 50%;</span> qui fait que le contenu est un cercle. </li>
+						<li>Les classes <span class="mono">yellow</span> ou <span class="mono">red</span> sont ajoutées par du JS</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Le JavaScript</h3>
+					<p class="left">2 fichiers .js décrivent le comportement du jeu :</p>
+					<ul class="leftlist">
+						<li>fourConnected.js contient la fonction <span class="mono">fourConnected</span>, qui vérifie si un coup qui vient d'être joué crée un alignement de 4 pions</li>
+						<li>p4.js initialise la partie, écoute les événements click sur les colonnes, et définit <span class="column">playOnColumn</span> qui décrit les modifications à apporter lors d'un coup </li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Positionnement du JavaScript</h3>
+					<p class="left">L'endroit où on inclut nos fichiers JavaScript est important :</p>
+					<ul class="leftlist">
+						<li>La fonction <span class="mono">fourConnected</span> est appelée dans p4.js, le fichier fourConnected.js qui la définit doit donc être inclu <em>avant</em> p4.js</li>
+						<li>p4.js a besoin de récupérer les élements du plateau de jeu, et doit donc être inclus après la définition de ces éléments HTML récupérés</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Écoute des événements</h3>
+					<p class="left">Il faut associer un clic dans une colonne à une fonction à l'aide de la méthode <span class="mono">addEventListener</span>. Ici, l'index i utilisé pour parcourir les colonnes est envoyé à la fonction <span class="mono">getPlayOnColumnFunction</span>, qui <em>renvoie une fonction</em> dont l'appel joue dans la colonne i</p>
+<pre><code class="hljs js">for (var i = 0; i &lt; columnsArray.length; i++) {
+  columnsArray[i].addEventListener('click',
+          getPlayOnColumnFunction(i));
+}
+
+function getPlayOnColumnFunction(i) {
+  return function() {
+    playOnColumn(i);
+  }
+}</code></pre>
+					</section>
+
+					<section>
+						<h3>Jouer dans une colonne</h3>
+<pre><code class="hljs js">for (var row = MAX_ROW; row >= 0; row--) { 
+  ...
+</code></pre>
+						<p class="left">En commençant par la dernière case, on remonte la colonne</p>
+<pre><code class="hljs js">if (game[col][row] == 0) {</code></pre>
+						<p class="left">Si on trouve une case vide, on : </p>
+						<ul class="leftlist">
+							<li>modifie le tableau game dans le JavaScript</li>
+							<li>change de joueur actif</li>
+							<li>modifie le html</li>
+							<li>véfifie si la partie est terminée</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Les expression ternaires</h3>
+						<p class="left mono">condition ? value if true : value if false;</p>
+<pre><code class="hljs js">currentPlayer = ((currentPlayer == 1) ? 2 : 1);</code></pre>
+						<p>est parfaitement équivalent à : </p>
+<pre><code class="hljs js">if (currentPlayer == 1) {
+  currentPlayer = 2;
+}
+else {
+  currentPlayer = 1;
+}</code></pre>
+					</section>
+
+					<section>
+						<h2>Comment créer votre librairie de fonctions réutilisables</h2>
+					</section>
+
+					<section>
+						<h3>Les librairies front-end</h3>
+						<ul class="leftlist">
+							<li>A première vue, la manipulation du HTML avec le JavaScript n'est pas très pratique</li>
+							<li>Beaucoup de librairies front-end, la plus connue étant jQuery, rendent cela plus simple</li>
+							<li>Mais avant de se jeter sur une librairie externe, nous allons voir comment écrire notre propre librairie ! C'est simple, car :
+								<ol>
+									<li>peu d'opérations sur le HTML sont nécessaires pour faire la plupart des choses intéressantes</li>
+									<li>il est simple d'étendre les fonctionalités du langage en JavaScript</li>
+								</ol>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>La manipulation du HTML en JS</h3>
+						<p class="left">Elle consiste toujours en 2 étapes :</p>
+						<ol class="leftlist">
+							<li>sélectionner un ou des éléments</li>
+							<li>modifier le contenu ou certaines propriétés des éléments sélectionnés</li>
+						</ol>
+						<p class="left">Comme ces étapes sont séparées, il faut garder les résultats dans des variables, et appeler des méthodes longues à écrire comme <span class="mono">document.querySelectorAll()</span> => beaucoup de code</p>
+					</section>
+
+					<section>
+						<h3>Exemple de jQuery</h3>
+
+<p class="left">Mettre la classe starred et le texte en jaune pour tous les li en JavaScript :</p>
+<pre><code class="hljs js">var listItems = document.querySelectorAll('li');
+for (var i = 0; i < listItems.length; i++) {
+    listItems[i].className = 'starred';
+    listItems[i].style.color = 'yellow';
+}</code></pre>
+
+<p class="left">La même chose avec jQuery :</p>
+<pre><code class="hljs js">$('li').addClass('starred').css('color', 'yellow');</code></pre>
+					</section>
+
+					<section>
+						<h3>jQuery</h3>
+						<p class="left">jQuery réduit fortement la quantité de code à écrire grâce : </p>
+						<ul class="leftlist">
+							<li>au symbole <span class="mono">$</span> qui, en un caractère, remplace l'effet de <span class="mono">document.querySelectorAll()</span></li>
+							<li>au fait de pouvoir enchaîner les appels à des méthodes</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Notre lib.js</h3>
+						<ul class="leftlist">
+							<li>Si ce n'est pas déjà fait, récupérer lib.js et son fichier sur le repository DANT <a href="https://github.com/Scienthousiaste/DANT" target="_blank">sur le github du cours</a></li>
+							<li>Le fichier lib.js crée une variable globale <span class="mono">select</span>, qui va contenir la fonction "select" définie dans le fichier</li>
+							<li>Cette fonction select a pour effet de faire un <span class="mono">document.querySelectorAll()</span> avec la string envoyée en paramètre, puis va associer au tableau d'élément résultant l'ensemble des méthodes définies dans le fichier, <strong>et renvoyer ce tableau</strong></li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Notre lib.js</h3>
+						<ul class="leftlist">
+							<li><span class="mono">select()</span> renvoie donc un objet pouvant appeler les méthodes de notre librairie, les éléments sélectionnés étant utilisables en itérant sur <span class="mono">this</span></li>
+							<li>Pour pouvoir enchaîner autant de méthodes qu'on veut, il faut veiller à ce que chaque méthode 
+								<ul>
+									<li>finisse par <span class="mono">return this;</span></li>
+									<li>soit ajoutée comme méthode du tableau <span class="mono">selectedElems</span> dans la fonction select</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Libjs - Notion de namespace</h3>
+<pre><code class="hljs js">var select = (function() {
+  ...
+  function select(queryString) { ... }
+  return select;
+})();</code></pre>
+						<p class="left">L'étrange syntaxe vue ici est une fonction anonyme qui s'appelle elle même immédiatement. Ce faisant, elle renvoie la fonction <span class="mono">select</span>, récupérée dans la variable du même nom.</p>
+						<p class="left">L'intérêt de cette construction est de ne pas polluer le namespace : les fonctions définies dans ce module ne sont accessibles que par l'objet renvoyé par select</p>
+					</section>
+
+					<section>
+						<h3>Utilisation de notre librairie</h3>
+						<p class="left">La librairie contient déjà les fonctions suivantes</p>
+						<ul class="leftlist">
+							<li> <span class="mono">addClass(newClass)</span> : ajout d'une classe aux éléments sélectionnés</li>
+							<li><span class="mono">removeClass(classToRemove)</span> : suppression d'une classe aux éléments sélectionnés</li>
+							<li><span class="mono">changeText(newContent)</span> : change le contenu textuel des éléments sélectionnés</li>
+						</ul>
+						<p class="left">Le fichier index.html joint permet de voir en action les 3 fonctions actuelles de notre librairie</p>
+					</section>
+
+					<section>
+						<h3>split et join</h3>
+						<p class="left">Ces deux méthodes permettent de passer des chaines de caractères aux tableaux et inversement :</p>
+						<ul class="leftlist">
+							<li><span class="mono">string.split(sep)</span> va créer un tableau de chaines de caractères en coupant <span class="mono">string</span> au caractère sep</li>
+							<li><span class="mono">array.join(sep)</span> va créer une chaine de caractères en concatenant chaque élément du tableau, entrecoupé de <span class="mono">sep</span> (virgule par défaut)</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>A votre tour !</h3>
+						<p class="left">A vous d'écrire ces fonctions inspirées de jQuery : </p>
+						<ul class="leftlist">
+							<li><span class="mono">html(newContent)</span> : le nouveau innerHTML des éléments est donné par newContent</li>
+							<li><span class="mono">hide()</span> : cache l'élément (display: none)</li>
+							<li><span class="mono">show(disp)</span> : annule le "hide". Si disp existe, met le display à disp. Si disp n'est pas renseigné, met le display de l'élément à "block"</li>
+							<li><span class="mono">on(event, foo)</span> : lorsque l'événement event se produit sur les éléments sélectionnés, appelle la fonction foo</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>A votre tour !</h3>
+						<p class="left">À chaque fois que vous ajoutez une fonction, testez que cela fonctionne comme prévu</p>
+						<p class="left">Si jamais vous vous ennuyez, vous pouvez toujours rajouter autant de fonctions que vous le souhaitez, vous trouverez sans doute de quoi faire <a href="https://api.jquery.com/">sur la doc de jQuery</a></p>
+					</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

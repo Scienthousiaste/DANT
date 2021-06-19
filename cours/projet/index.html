@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Le projet</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.0.13/css/all.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/js/all.min.js"></script>
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+		<link rel="stylesheet" href="../css/shared.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Projet Web</h1>
+				</section>
+				<section>
+					<h3>Démarrage</h3>
+					<ul class="leftlist">
+						<li>Un des membres du groupe créé le repository du projet sur github, puis ajoute les autres en collaborateurs</li>
+						<li>Tout le monde clone le dossier du projet</li>
+						<li>Vous pouvez d'ores et déjà créer un fichier nommé exactement <span class="mono">.gitignore</span>, contenant la ligne <span class="mono">node_modules</span></li>
+					</ul>
+				</section>
+				<section>
+					<h3>Mise en place du back-end</h3>
+					<ul class="leftlist">
+						<li>Vous DEVREZ utiliser un back-end (par défaut, serveur Express) et être prêts à afficher templates dans votre projet : autant le faire dès le début</li>
+						<li>Dans le terminal, dans le dossier de votre projet, entrez les commandes suivantes :</li>
+						<ul class="leftlist">
+							<li><span class="mono">npm init --yes</span></li>
+							<li><span class="mono">npm install express</span></li>
+							<li><span class="mono">npm install express-handlebars</span></li>
+							<li><span class="mono">npm install nodemon</span></li>
+						</ul>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Mise en place du back-end - suite</h3>
+					<ul class="leftlist">
+						<li>Créez le fichier <span class="mono">index.js</span> qui contiendra votre app.</li>
+						<li>Créez un dossier <span class="mono">public</span> dans votre projet, contenant les 3 sous dossiers <span class="mono">images</span>, <span class="mono">css</span> et <span class="mono">js</span></li>
+						<li>Créez un dossier <span class="mono">views</span> dans votre projet, qui contiendra les templates</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Code initial de index.js</h3>
+<pre><code class="hljs js">const express = require('express');
+const hbs = require('express-handlebars');
+const app = express();
+
+app.use(express.static('public'));
+
+app.engine('hbs', hbs({
+  extname: 'hbs',
+  defaultLayout: 'index',
+  layoutsDir: __dirname + '/views/',
+}));
+app.set('view engine', 'hbs');
+
+app.get('/*', function (req, res) {
+  res.sendStatus(404);
+})
+
+app.listen(3000, function () {
+  console.log('Application qui écoute sur le port 3000!');
+})</code></pre>
+				</section>
+				<section>
+					<h3>Votre template defaultLayout index.hbs</h3>
+					<p class="left">Créez le fichier <span class="mono">index.hbs</span> dans le dossier <span class="mono">views</span>, contenant le code suivant : </p>
+<pre><code class="hljs js">&lt;!DOCTYPE html&gt;
+&lt;html&gt; 
+ &lt;head&gt; 
+   &lt;meta charset="utf-8"&gt;
+   &lt;title&gt;{{ title }}&lt;/title&gt; 
+ &lt;/head&gt;
+ &lt;body&gt; 
+   {{{ body }}} 
+ &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				</section>
+				<section>
+					<h3>Lancer votre projet</h3>
+					<p class="left">Si vous avez installé <span class="mono">nodemon</span>, au lieu d'utiliser <span class="mono">node index.js</span>, lancez votre projet dans le terminal avec la commande : </p>
+<pre><code class="hljs js">npx nodemon</code></pre>
+					<p class="left">De cette façon, le serveur se relancera automatiquement lorsque vous sauvegarderez vos fichiers, et vous pourrez ainsi voir directement les changements</p>
+				</section>
+				<section>
+					<h3>Git</h3>
+					<ul class="leftlist">
+						<li>Commandes à connaitre : 
+							<ul class="leftlist">
+								<li><span class="mono">git clone __chemin__</span></li>
+								<li><span class="mono">git add __fichier__ / -A / -u</span></li>
+								<li><span class="mono">git commit -m "message <strong>pertinent</strong>"</span></li>
+								<li><span class="mono">git push</span></li>
+								<li><span class="mono">git status</span></li>
+								<li><span class="mono">git log</span></li>
+							</ul>
+						</li>
+						<li>Il n'est pas nécessaire de push chaque commit</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Code propre</h3>
+					<p class="left">Un code est propre si : </p>
+					<ul class="leftlist">
+						<li>il est <strong>lisible</strong></li>
+						<li>il n'y a pas de répétitions</li>
+						<li>il ne reste pas de code inutile/inutilisé (ex des declarations CSS qui n'ont plus aucun effet) ou de commentaires qui ne sont pas compréhensibles ou qui ne sont plus valide</li>
+						<li>il applique une norme/des conventions de nommage sur tout le projet</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Conseils pour un code plus propre</h3>
+					<ul class="leftlist">
+						<li>Séparer en petites fonctions faciles à comprendre, qui ne font qu'une chose, mais qui le font bien</li>
+						<li>Écrire plusieurs petits fichiers plutôt qu'un gros</li>
+						<li>Le nommage des fonctions et variables joue un rôle immense dans la lisibilité. Ne pas hésiter à renommer/refactorer.</li>
+						<li>Le code nait rarement propre : vos futurs-vous vous remercierons chaleureusement si vous passez du temps à nettoyer votre code !</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Organisation</h3>
+					<ul class="leftlist">
+						<li>Planifier / définir ce que vous voulez obtenir est toujours une excellente idée</li>
+						<li>Séparer le travail / définir des objectifs</li>
+						<li>Demander de l'aide</li>
+						<li>Google est votre ami</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Ce qu'il nous reste à voir du back end ensemble</h3>
+					<ul class="leftlist">
+						<li>Les requêtes AJAX</li>
+						<li>Les bases de données</li>
+						<li>Les sous routeurs Express</li>
+						<li>L'identification des utilisateurs</li>
+						<li>Le code asynchrone et ses difficultés</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+		<script src="js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

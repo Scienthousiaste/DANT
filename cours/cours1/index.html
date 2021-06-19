@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>HTML</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="../css/shared.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section id="firstSlide">
+					<h1>HTML</h1>
+					<h2>HyperText Markup Language</h2>
+
+				</section>
+				<section>
+					<h3>Tim Berners-Lee</h3>
+
+					<img src="https://s.france24.com/media/display/c2b3bad0-0fd1-11e9-bda7-005056a964fe/w:1024/p:16x9/f57e34f4778b4783cbc44a140010e623.jpg" alt="Tim Berners Lee" height="300"/>
+					<p class="left">
+						Inventeur du web(HTTP, HTML)<br>
+						A l'origine du W3C (organisme de standardisation pour un "un seul web partout et pour tous")<br>
+						Défenseur de la liberté du web.
+
+					</p>
+				</section>
+				<section>
+					<h3>HTML - HyperText Markup Language</h3>
+					<ul class="leftList">
+						<li>Le HTML est un langage de markup (il décrit les éléments présents), pas de programmation.</li>
+						<li>Actuellement, en version 5 (évolue toujours, la V5 date de 2014).</li>
+						<li>Un document HTML est composé de balises (ou tags), délimitées par des chevrons (&lt; &gt;). Les balises peuvent contenir du texte et / ou d'autres balises.</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Structure d'un document HTML</h3>
+					<ul class="leftList">
+						<li>Déclaration de la version HTML utilisée<br>(&lt;!DOCTYPE html&gt; pour HTML 5)</li>
+						<li>En-tête (head)</li>
+						<li>Corps du document (body)</li>
+					</ul>
+					
+<pre><code class="hljs html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="UTF-8"/&gt;
+        &lt;title&gt;Première page web&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;Ceci sera affiché dans le navigateur&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				</section>
+				<section>
+					<h3>Deux types de balises</h3>
+					<ul class="leftList">
+						<li>
+							Balises qui délimitent une zone
+							<ul class="leftList">
+						 		<li>Balise de début de zone &lt;p&gt;</li>
+						 		<li>Balise fermante ou de fin de zone &lt;/p&gt;</li>
+						 	</ul>
+<pre><code class="hljs html">&lt;p&gt;
+    La balise p délimite un paragraphe 
+    de texte
+&lt;/p&gt;</code>
+</pre>
+						</li>
+						<li>
+							Balises autonomes : se suffisent à elles-mêmes et n'ont pas besoin d'être fermées.
+						 	Par exemple, &lt;br&gt; insère un saut de ligne (avant HTML5, il <strong>fallait</strong> finir ces balises par '/', vous verrez donc souvent &lt;br/&gt;)
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Règles de balisage</h3>
+					<p class="left">Les balises peuvent être imbriquées :</p>
+					<pre><code class="hljs html"><p>texte en <em>italique et en <strong>gras</strong></em></p></code></pre>
+					<p class="left">Une balise doit toujours se fermer dans la même balise que celle où elle a été ouverte, le code suivant n'est donc pas correct :</p>
+					<pre><code class="hljs html"><p>Ceci n'est &lt;em&gt;pas &lt;strong&gt;correct&lt;/em&gt; du tout&lt;/strong&gt;</p></code></pre>
+				</section>
+				<section>
+					<h3>Inline et Block</h3>
+					<p class="left">
+						On distingue :
+					</p>
+					<ul class="leftList">
+						<li>
+							les balises bloc, qui peuvent contenir des balises en-ligne et en bloc (sauf exceptions)<br>
+							<code>Exemples: p, h1, ul, table, form, pre, div</code>
+						</li>
+						<li>
+							les balises en-ligne (<em>inline</em>), qui ne peuvent contenir que d'autres balises en-ligne (sauf exceptions)<br>
+							<code>Exemples: em, strong, img, a, span</code>
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Les attributs</h3>
+					<p class="left">
+						Les balises peuvent avoir des attributs, qui vont préciser la manière dont elles se comportent.<br>
+						Ex : la balise autonome &lt;img/&gt;, qui insère une image, a besoin du chemin vers l'image en question, fourni par l'attribut "src" :
+					</p>
+<pre><code class="hljs html">&lt;img src="chat.gif" /&gt;</code></pre>
+					<p class="left">
+						La valeur de l'attribut doit être entre guillemets
+					</p>
+				</section>
+				<section>
+					<h3>Commentaires</h3>
+					<p class="left">
+						En HTML, un commentaire se fait avec la syntaxe suivante :
+					</p>
+<pre><code class="hljs html">&lt;p&gt; début du paragraphe
+&lt;!-- Tout ce qu'il y a ici est un commentaire et 
+n'apparaitra pas dans le document --&gt;
+fin du paragraphe &lt;/p&gt;</code></pre>
+				</section>
+
+				<section>
+					<h3>Caractères spéciaux</h3>
+					<p class="left">
+						Les caractères utilisés pour le HTML, tels que &lt;, &gt; et &amp;, doivent être encodés avec si on veut les afficher tels quels.
+					</p>
+					<ul class="leftList">
+						<li>&lt; s'encode <span class="mono">&amp;lt;</span> (lt pour <em>less than</em>)</li>
+						<li>&gt; s'encode  <span class="mono">&amp;gt;</span> (gt pour <em>greater than</em>)</li>
+						<li>&amp; s'encode  <span class="mono">&amp;amp;</span> (ce caractère se nomme <em>ampersand</em> en anglais, et esperluette en français)</li>
+					</ul>
+					<p class="left">Il faut aussi encoder les caractères accentués / non ASCII si on n'utilise pas l'UTF 8 => toujours inclure une balise &lt;meta charset="utf-8"&gt; dans head</p>
+				</section>
+
+				<section>
+					<h3>Espacement</h3>
+					<p class="left">
+						Dans un document HTML, les sauts de ligne et espaces (après le premier) à l'intérieur des balises sont ignorés. Pour utiliser un texte préformaté avec les espaces tels quels, on peut utiliser une balise &lt;pre&gt;...&lt;/pre&gt;.
+					</p>
+					<pre class="mono center">
+  *  
+ * * 
+* * *
+</pre>
+					<p class="left">
+						Pour sauter une ligne à l'intérieur d'un bloc, on utilise la balise &lt;br&gt;.
+					</p>
+				</section>
+
+				
+				<section>
+					<h3>Le contenu de la balise head</h3>
+					<p class="left">
+						La balise &lt;head&gt; est l'en-tête du fichier HTML. C'est là qu'on spécifie le titre (obligatoire) de la page, qu'on inclut des fichiers de scripts et de style, et qu'on donne des informations sur la page.
+					</p>
+<pre><code class="hljs html">&lt;head&gt;
+	&lt;meta charset="UTF-8"&gt;
+	&lt;meta author="Timothée Behra"&gt;
+	&lt;title&gt;Le header&lt;/title&gt;
+	&lt;link rel="stylesheet" type="text/css" href="css/style.css"&gt;
+	&lt;script src="script.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;/head&gt;</code></pre>
+				</section>
+				<section>
+					<h3>La balise body</h3>
+					<ul class="leftList">
+						<li>Contient l'intégralité de la page elle-même</li>
+						<li>Avec &lt;head&gt;, c'est la seule autre balise que peut contenir la balise &lt;html&gt;</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Les liens hypertextes</h3>
+					<ul class="leftList">
+						<li>un lien est un élément cliquable permettant d'atteindre un document désigné par une URL</li>
+						<li>on utilise la balise en-ligne <span class="mono">&lt;a&gt;texte du lien&lt;/a&gt;</span> et on spécifie l'URL avec l'attribut href (pour <em>hypertext reference</em>)</li>
+						<li>peut être absolu, relatif, ou interne à un document
+<pre><code class="hljs html"><a href="http://www.lip6.fr/index.html">LIP6</a>
+<a href="sommaire.html">sommaire</a>
+<a href="rapport.html#conclusion">conclusion du rapport</a></code></pre>
+					</ul>
+				</section>
+				<section>
+					<h3>Les images</h3>
+					<ul class="leftList">
+						<li>on insère une image avec la balise &lt;img /&gt; (une balise autonome et en-ligne)</li>
+						<li>attributs : <br>
+							<ul>
+								<li><span class="mono">src</span> (url de l'image)</li>
+								<li><span class="mono">alt</span> (légende / texte qui remplace l'image si elle ne s'affiche pas)</li> <li><span class="mono">height</span> (hauteur)</li> 
+								<li><span class="mono">width</span> (largeur)</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Les listes</h3>
+					<ul class="leftList">
+						<li>Pour faire une liste, on ouvre une balise &lt;ul&gt; (liste non ordonnée, à puces) ou &lt;ol&gt; (liste ordonnée), puis chacun des éléments est dans une balise &lt;li&gt;</li>
+						<li>Attribut type, peut prendre une des valeurs"disc|circle|square" pour ul, ou "1|I|i|A|a" pour ol</li>
+						<li>On peut créer des listes imbriquées</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Exemple de liste</h3>
+<pre><code class="hljs html"><ol start="3">
+  <li type="a"> élément 1,1 </li> <li> élément 1,2 </li>
+  <li>.
+    <ol>
+      <li type="A"> élément 2,1 </li>
+      <li type="A"> élément 2,2 </li> 
+    </ol>
+  </li>
+  <li>élément 1,3 </li>
+</ol></code></pre>
+					<ol start="3">
+						<li type="a"> élément 1,1 </li>
+						<li> élément 1,2 </li>
+						<li>
+							<ol>
+								<li type="A"> élément 2,1 </li>
+								<li type="A"> élément 2,2 </li>
+							</ol>
+						</li>
+						<li>élément 1,3 </li>
+					</ol>
+				</section>
+				<section>
+					<h3>Les titres</h3>
+					<h1>&lt;<span class="lowercase">h</span>1&gt;Titre 1&lt;/<span class="lowercase">h</span>1&gt;</h1>
+					<h2>&lt;<span class="lowercase">h</span>2&gt;Titre 2&lt;/<span class="lowercase">h</span>2&gt;</h2>
+					<h3>&lt;<span class="lowercase">h</span>3&gt;Titre 3&lt;/<span class="lowercase">h</span>3&gt;</h3>
+					<h4>&lt;<span class="lowercase">h</span>4&gt;Titre 4&lt;/<span class="lowercase">h</span>4&gt;</h4>
+					<h5>&lt;<span class="lowercase">h</span>5&gt;Titre 5&lt;/<span class="lowercase">h</span>5&gt;</h5>
+					<h6>&lt;<span class="lowercase">h</span>6&gt;Titre 6&lt;/<span class="lowercase">h</span>6&gt;</h6>
+				</section>
+				<section>
+					<h3>Balises génériques : div et span</h3>
+					<ul class="leftList">
+						<li><span class="mono">&lt;div&gt;</span> permet de définir une balise de type block générique</li>
+						<li><span class="mono">&lt;span&gt;</span> permet de définir une balise de type inline générique</li>
+						<li>ces balises génériques ne devraient être utilisées que lorsqu'aucune autre balise sémantique n'est appropriée</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Deux attributs universaux</h3>
+					<ul class="leftList">
+						<li>L'attribut <span class="mono">id</span> permet de donner un identifiant à une <strong>balise unique</strong>. La présence de plusieurs éléments avec un même id cause une erreur</li>
+						<li>L'attribut <span class="mono">class</span> permet de décréter que la balise appartient à une ou plusieurs classes d'éléments</li>
+						<li>Ces 2 attributs peuvent être donnés à n'importe quelle balise, et servent à identifier ces éléments pour leur donner un style ou leur appliquer une logique</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Les tableaux</h3>
+					<ul class="leftList">
+						<li>La balise <span class="mono">&lt;table&gt;</span> permet de définir un tableau à deux dimensions</li>
+						<li>On commence chaque ligne par une balise <span class="mono">&lt;tr&gt;</span> (pour <em>table row</em>)</li>
+						<li>
+							Une ligne <span class="mono">&lt;tr&gt;</span> contient ensuite des balises <span class="mono">&lt;td&gt;</span> (cellule normale) et <span class="mono">&lt;th&gt;</span> (cellule de titre). <br/>
+							Les <span class="mono">&lt;td&gt;</span> et <span class="mono">&lt;th&gt;</span> contiennent le contenu des cellules
+						</li>
+						<li>
+							Autres éléments pouvant être contenus dans une <span class="mono">&lt;table&gt;</span> : <span class="mono">&lt;caption&gt;</span>, <span class="mono">&lt;thead&gt;</span>, <span class="mono">&lt;tbody&gt;</span>, <span class="mono">&lt;tfoot&gt;</span> 
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Un tableau minimal</h3>
+<pre><code class="hljs html"><table>
+  <tbody>
+    <tr>
+      <th>Titre colonne gauche</th>
+      <th>Titre colonne droite</th>
+    </tr>
+    <tr>
+      <td>Contenu gauche</td>
+      <td>Contenu droite</td>
+    </tr>
+  </tbody>
+</table></code></pre>
+				<table>
+				  <tbody>
+				    <tr>
+				    	<!-- En vrai, c'est l'hippopotame le plus féroce -->
+				      <th>Titre colonne gauche</th>
+				      <th>Titre colonne droite</th>
+				    </tr>
+				    <tr>
+				      <td>Contenu gauche</td>
+				      <td>Contenu droite</td>
+				    </tr>
+				  </tbody>
+				</table>
+				</section>
+				<section>
+					<h3>Exercice</h3>
+					<ul class="leftList">
+						<li>Écrivez un document en pur HTML qui contient un tableau avec au moins 3 lignes dont une ligne de titre et au moins 4 colonnes.</li>
+						<li>La première colonne doit comprendre une image qui, lorsqu'on clique dessus, renvoie sur le site où cette image a été trouvée.</li>
+						<li>Toutes les lignes doivent avoir la même hauteur.</li>
+						<li>Au moins une des cases contient une liste d'éléments</li>
+						<li>Contenu au choix - si pas d'inspiration, informations sur des animaux (cf exemple)</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Exemple</h3>
+					<img src="../images/animaux.png">
+				</section>
+
+				<section id="formSlide">
+					<h3>Les formulaires</h3>
+					<ul class="leftList">
+						<li>Permettent aux clients de saisir des informations à envoyer au serveur.</li>
+						<li>Un formulaire est défini en HTML et peut contenir :
+							<form action="#/formSlide" method="get">
+							<ul>
+								<li>des zones de saisie de texte : <input type="text" name="texte"></li>
+								<li>
+									des cases à cocher : 
+									<input type="checkbox" name="checkbox1" id="checkboxOui" value="oui">
+									<label for="checkboxOui">Oui</label>
+									<input type="checkbox" name="checkbox2" id="checkboxNon" value="non">
+									<label for="checkboxNon">Non</label>
+								</li>
+								<li>des boutons radio :
+									<input type="radio" name="radioBouton" id="radioBouton" value="Bouton">
+									<label for="radioBouton">Bouton</label>
+									<input type="radio" name="radioBouton" id="radioRadio" value="radio">
+									<label for="radioRadio">radio</label>
+								</li>
+								<li>des menus déroulants :
+									<select name="choix" id="choix">
+										<option value="">Sélectionner...</option>
+										<option value="text">text</option>
+										<option value="select">select</option>
+										<option value="checkBox">checkBox</option>
+										<option value="radio">radio</option>
+									</select>
+								</li>
+								<li>des boutons : <input type="submit" value="Valider"><input type="reset" value="Remettre à 0">
+</li>
+							</ul>
+							</form>
+				</section>
+				<section>
+					<h3>La balise form</h3>
+					<ul class="leftList">
+						<li>
+							Déclaration du formulaire : <span class="mono">&lt;form&gt;</span> ... <span class="mono">&lt;/form&gt;</span>
+						</li>
+						<li>
+							Attributs importants :
+							<ul class="leftList">
+								<li><span class="mono">action</span> : URL vers laquelle envoyer les données saisies</li>
+								<li><span class="mono">method</span> : commande http (get ou post) à utiliser pour effectuer l'envoi</li>
+							</ul>
+						</li>
+						<li>Toutes les balises sont permises dans un formulaire</li>
+					</ul>
+				</section>
+				<section>
+					<h3>La balise input</h3>
+					<ul class="leftList">
+						<li>
+							Balise en ligne, autonome, qui doit être déclarée dans unformulaire
+						</li>
+						<li>
+							<span class="mono">name</span> : le nom du champ de saisie, unique dans le formulaire, permet de récupérer sa valeur
+						</li>
+						
+						<li>
+							<span class="mono">type</span> :
+							<ul class="leftList">
+								<li><span class="mono">text</span> : zone de texte (type par défaut)</li>
+								<li><span class="mono">radio</span> : un choix maximum parmis plusieurs</li>
+								<li><span class="mono">checkbox</span> : chaque case peut être cochée ou non</li>
+								<li><span class="mono">number</span> : ne permet de rentrer qu'un nombre</li>
+							</ul>
+					</ul>
+				</section>
+				<section>
+					<h3>Les boutons radio</h3>
+					<p class="left">Les boutons radios appartenant au même groupe ont le même <span class="mono">name</span>.</p>
+<pre><code class="hljs html">Quel est votre langage préféré ?
+<input type="radio" name="lang" id="langC" value="C">C
+<input type="radio" name="lang" id="langJS" value="JS">Javascript
+<input type="radio" name="lang" id="langPython" value="Python">Python
+Aimez vous les choux de Bruxelles ?
+<input type="radio" name="choux" id="non" value="non">Non
+<input type="radio" name="choux" id="nonnon" value="nonnon">Absolument pas
+</code></pre>
+					Quel est votre langage préféré ?<br>
+					<input type="radio" name="lang" id="langC" value="C"><label for="langC">C</label>
+					<input type="radio" name="lang" id="langJS" value="JS"><label for="langJS">Javascript</label>
+					<input type="radio" name="lang" id="langPython" value="Python"><label for="langPython">Python</label>
+					<br>
+					Aimez vous les choux de Bruxelles ?<br>
+					<input type="radio" name="choux" id="non" value="non"><label for="non">Non</label>
+					<input type="radio" name="choux" id="nonnon" value="nonnon"><label for="nonnon">Absolument pas</label>
+				</section>
+				<section>
+					<h3>La balise label</h3>
+					<ul class="leftList">
+						<li>Un <span class="mono">label</span> est un texte associé à un champ de formulaire. Un clic sur le label met le focus sur le champ</li>
+						<li>Il faut utiliser l'attribut <span class="mono">for</span> et lui donner l'<span class="mono">id</span> du champ correspondant (attention, pas le <span class="mono">name</span>)</li>
+					</ul>
+<pre><code class="hljs html"><label for="first">Label pour le premier texte</label><input name="first" id="first">
+<label for="second">Label pour le second texte</label><input name="second" id="second">
+</code></pre>
+					<label for="first">Label pour le premier texte</label><input name="first" id="first"><br>
+					<label for="second">Label pour le second texte</label><input name="second" id="second">
+				</section>
+				<section id="last-slide">
+					<h3>Envoi des données au serveur</h3>
+					<ul class="leftList">
+						<li>Lorsque l'utilisateur appuie sur le bouton submit, le navigateur construit une chaîne de caractères contenant toutes les données du formulaire, et l'envoie au serveur.</li>
+						<li> Ensemble de couples séparées par le caractère &. Chaque couple est de la forme nom de champ = valeur saisie. Les espaces sont remplacés par le caractère + (ou %20). Les caractères + & = sont encodés %2B %26 %3D</li>
+					</ul>
+				</section>
+				<section id="sendDataSlide">
+					<h3>Envoi des données au serveur</h3>
+					<ul class="leftList">
+						<li>Si le formulaire utilise la méthode "get", la chaine de caractère représentant les réponses au formulaire est visible dans l'URL de la page désignée par l'attribut <span class="mono">action</span></li>
+					</ul>
+					<form action="#/sendDataSlide" method="get">
+							<input type="text" name="texte"><br>
+							<input type="checkbox" name="checkbox1" id="checkboxOui2" value="oui">
+							<label for="checkboxOui2">Oui</label>
+							<input type="checkbox" name="checkbox2" id="checkboxNon2" value="non">
+							<label for="checkboxNon2">Non</label><br>
+							<input type="radio" name="radioBouton" id="radioBouton2" value="Bouton">
+							<label for="radioBouton2">Bouton</label>
+							<input type="radio" name="radioBouton" id="radioRadio2" value="radio">
+							<label for="radioRadio2">Radio</label><br>
+							<select name="choix" id="choix2">
+								<option value="">Sélectionner votre input préféré...</option>
+								<option value="text">text</option>
+								<option value="select">select</option>
+								<option value="checkBox">checkBox</option>
+								<option value="radio">radio</option>
+							</select><br>
+						<input type="submit" value="Complétez, cliquez et regardez dans l'URL"><input type="reset" value="Remettre à 0">
+					</form>
+				</section>
+				<section>
+					<h3>Où trouver plus d'infos ?</h3>
+					<ul class="leftList">
+						<li>Liste des balises : <a href="http://www.w3schools.com/tags/default.asp">http://www.w3schools.com/tags</a></li>
+						<li>Similaire, en français : <a href="https://developer.mozilla.org/fr/docs/Web/HTML/Element"> developer.mozilla.org</a></li>
+						<li>Validateur : <a href="http://validator.w3.org/">http://validator.w3.org/</a></li>
+						<li>Vous pouvez toujours accéder au HTML de ce que vous voyez dans la console du navigateur (clic droit, "Inspecter", signet Élements sur chrome, ou clic droit, "examiner l'élément" sur firefox)</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

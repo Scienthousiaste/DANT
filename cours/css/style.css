@@ -1,0 +1,11 @@
+body {
+	margin: 10% 20%;
+}
+
+form {
+	text-align: center;
+}
+
+form input {
+	margin: 15px;
+}

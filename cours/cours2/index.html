@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CSS</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="../css/shared.css">
+
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.0.13/css/all.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/js/all.min.js"></script>
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>CSS</h1>
+					<p>Le style avec les Cascading Style Sheet</p>
+				</section>
+				<section>
+					<h3>Syntaxe du CSS</h3>
+<pre><code class="hljs html">_sélecteur_ {
+  propriété1: valeur;
+  propriété2: "valeur en plusieurs mots";
+}</code></pre>
+				<p class="left">
+					Le sélecteur peut être :
+				</p>
+				<ul class="leftlist">
+					<li>Une balise : <span class="mono">p {</span></li>
+					<li>Un identifiant (attribut id) : <span class="mono">#identifiant {</span></li>
+					<li>Une classe (attribut class) : <span class="mono">.classe {</span></li>
+					<li>Une balise/class dans une autre : <span class="mono">p ul .elem{</span></li>
+					<li>Plusieurs sélecteurs : <span class="mono">p, ul .elem{</span></li>
+				</ul>	
+				</section>
+				<section>
+					<h3>Intégrer des feuilles de style</h3>
+					<p class="left">On peut ajouter du CSS à un document HTML :</p>
+					<ul class="leftlist">
+						<li>Dans un fichier.css à part lié à l'aide d'une balise link située dans la balise head (la meilleure solution)</li>
+<pre><code class="hljs html"><link rel="stylesheet" href="css/style.css">
+</code></pre>
+						<li>En écrivant le CSS dans une balise style dans le head (ok pour un petit document)</li>
+<pre><code class="hljs html"><style>
+  p {
+    font-size: 20px;
+  }
+</style>
+</code></pre>
+					</ul>
+				</section>
+				<section>
+					<h3>Display</h3>
+					<p class="left">La propriété display permet d'indiquer la manière dont l'élément se comporte</p>
+					<ul class="leftlist">
+						<li><span class="mono">inline</span> : l'élément s'affiche en ligne, les propriétés width et height ne peuvent pas être appliquées</li>
+						<li><span class="mono">block</span> : passe à la ligne et prend toute la largeur</li>
+						<li><span class="mono">inline-block</span> : ne passe pas à la ligne, mais permet d'appliquer une largeur et une hauteur</li>
+						<li><span class="mono">none</span> : n'apparait pas du tout</li>
+						<li><a href="https://jsfiddle.net/uLfy2tnw/2" target="_blank">JSfiddle display et visibility</a></li>
+					</ul>
+				</section>
+				<section>
+					<h3>Mettre des couleurs</h3>
+					<p class="left">Les propriétés liées aux couleurs sont :</p>
+					<ul class="leftlist">
+						<li><span class="mono">color</span> (couleur du texte)</li>
+						<li><span class="mono">background-color</span> (couleur du fond)</li>
+					</ul>
+					<p class="left">3 formats possibles :</p>
+					<ul class="leftlist">
+						<li><span class="mono">color: blue;</span> (voir <a href="https://en.wikipedia.org/wiki/Web_colors" target="_blank">liste des couleurs nommées</a>)</li>
+						<li><span class="mono">color: rgb(0, 128, 255);</span> (3 valeurs de rouge, vert et bleu de 0 à 255)</li>
+						<li><span class="mono">color: #0080FF;</span> (idem, 3 valeurs RRGGBB en hexadécimal)</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Le modèle en boîte</h3>
+					<a href="https://jsfiddle.net/zost1bad/3/" target="_blank">
+						<img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Boxmodell-detail.png" alt="Le modèle en boîte" />
+					</a>
+				</section>
+				<section>
+					<h3>Box sizing</h3>
+					<a href="https://jsfiddle.net/z19svgxe/1" target="_blank">
+						<img id="boxsizing-img" src="https://connorshea.gitlab.io/images/posts/css-that-doesnt-suck/content-box-vs-border-box.png"
+							alt="content-box vs border-box" />
+					</a>
+					<p class="left">
+						Par défaut, les propriétés width et height d'un bloc n'incluent que le contenu, pas le padding.
+						Pour inclure le padding, utiliser <span class="mono">box-sizing: border-box;</span>
+					</p>
+					<!-- https://developer.mozilla.org/fr/docs/Web/CSS/box-sizing -->
+				</section>
+				<section>
+					<h3>La pseudoclasse :hover</h3>
+					<p class="left">
+						En ajoutant <span class="mono">:hover</span> à un sélecteur, on peut modifier le style de l'élément lorsque le pointeur de
+						la souris le survole. Cette pseudoclasse peut être attribuée à n'importe quel balise. <br>
+						Voir <a href="https://jsfiddle.net/4tng8kpr/2/" target="_blank">démonstration sur JSFiddle</a>
+					</p>
+				</section>
+				<section>
+					<h3>Positionnement</h3>
+					<p class="left">Pour repositionner un bloc sur notre document, on donne à la propriété <span class="mono">position</span> la valeur :</p>
+					<ul class="leftlist">
+						<li><span class="mono">relative</span> : le bloc est décalé par rapport à sa position dans le flux</li>
+						<li><span class="mono">absolute</span> : le bloc sort du flux et est positionné par rapport au bloc englobant</li>
+						<li><span class="mono">fixed</span> : le bloc est fixé à une position sur la page</li>
+					</ul>
+					<p class="left">On définit ensuite <span class="mono">top, right, left, bottom</span> pour indiquer le décalage ou la position. <a href="https://developer.mozilla.org/fr/docs/Web/CSS/position" target="_blank">Ex et + d'infos</a></p>
+				</section>
+				<section>
+					<h3>Float : les éléments flottants</h3>
+					<p class="left">Un élément avec la propriété float sera positionné en premier par le navigateur, tout à gauche (<span class="mono">float: left</span>) ou à droite (<span class="mono">float: right</span>) de son contenant, puis le reste des éléments se positionnera autour. <br>
+					<a href="https://jsfiddle.net/2d5gy3qr/2/" target="_blank">Démo sur JSfiddle</a>
+					</p>
+				</section>
+				<section>
+					<h3>Trouver des icônes avec font awesome</h3>
+						<p class="left">Pour inclure des icônes du site <a href="https://fontawesome.com">font awesome</a>, ajouter dans le head un lien vers les fichiers CSS et JS :</p>
+<pre><code class="hljs html"><link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.0.13/css/all.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/js/all.min.js"></script></code></pre>
+					<p class="left">Puis trouver une icône gratuite (non marquée "pro") sur le site et ajouter la balise &lt;i&gt; correspondante</p>
+	<pre><code class="hljs html">&lt;i class="fas fa-angle-double-down"&gt;&lt;/i&gt;</code></pre>	
+					<p class="left">
+						Les icônes ainsi ajoutées s'affichent en ligne et on peut en modifier le CSS : <i class="fas fa-angle-double-down"></i><i class="fas fa-angle-double-down icon2"></i>
+					</p>
+					</section>
+					<section>
+						<h3>Flexbox</h3>
+						<ul class="leftlist">
+							<li>CSS 3 (<a href="https://caniuse.com/#search=display%3A%20flex" target="_blank">relativement bien supporté</a>)</li>
+							<li>Introduit un nouveau mode d'affichage, les "boîtes flexibles", avec <span class="mono">display: flex;</span></li>
+							<li>Enfin un moyen clair d'organiser ses éléments</li>
+							<li><a href="https://flexboxfroggy.com/" target="_blank">Un jeu pour apprendre</a></li>
+							<li><a href="https://demos.scotch.io/visual-guide-to-css3-flexbox-flexbox-playground/demos/" target="_blank">Bac à sable pour tester</a></li>
+							<li><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank">Guide complet</a></li>
+						</ul>
+					</section>
+					<section>
+						<h3>Flexbox - propriétés du contenant</h3>
+						<ul class="leftlist">
+							<li><span class="mono">flex-direction</span>: définit l'axe principal <span class="appearOnHover mono">(row, column, row-reverse, column-reverse)</span></li>
+							<li><span class="mono">justify-content</span>: définit l'alignement des items selon l'axe principal <span class="appearOnHover mono">(flex-start | flex-end | center | space-between | space-around)</span></li>
+							<li><span class="mono">align-items</span>: définit alignement selon l'autre axe secondaire <span class="appearOnHover mono">(flex-start | flex-end | center | stretch)</span></li>
+							<li><span class="mono">flex-wrap</span>: par défaut, les items sont forcés sur une seule ligne (nowrap)</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Flexbox - propriétés des items</h3>
+						<ul class="leftlist">
+							<li><span class="mono">align-self</span>: permet de donner à un item spécifique un alignement différent de celui des autres (définit par align-items)<span class="appearOnHover mono">(flex-start | flex-end | center | stretch)</span></li>
+							<li><span class="mono">flex-grow</span>: indique la proportion d'espace restant que cet item va prendre. Par défaut, vaut 0. Si tous les items ont une valeur de 1, ils se partagent l'espace. Si un item a une valeur de 2, il va prendre deux fois plus d'espace que ceux à 1. <a href="https://demos.scotch.io/visual-guide-to-css3-flexbox-flexbox-playground/demos/" target="_blank">Test</a>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Les JSFiddle du cours</h3>
+					<ul> 
+						<li><a href="https://jsfiddle.net/uLfy2tnw/2" target="_blank">display et visibility</a></li>
+						<li><a href="https://jsfiddle.net/zost1bad/3/" target="_blank">modèle de boite</a></li>
+						<li><a href="https://jsfiddle.net/z19svgxe/1" target="_blank">box-sizing</a></li>
+						<li><a href="https://jsfiddle.net/4tng8kpr/2/" target="_blank">hover</a></li>
+						<li><a href="https://jsfiddle.net/2d5gy3qr/2/" target="_blank">float</a></li>
+						<li><a href="https://jsfiddle.net/1zkb2eo7/1/" target="_blank">Début de l'exercice</a></li>
+					</ul>
+				</section>
+				<section>
+					<h3>Des liens utiles</h3>
+					<ul>
+						<li><a href="https://en.wikipedia.org/wiki/Web_colors">https://en.wikipedia.org/wiki/Web_colors</a> (les couleurs)</li>
+						<li><a href="https://caniuse.com">https://caniuse.com</a> (possibilité d'utiliser des features selon navigateur)</li>
+						<li><a href="https://fontawesome.com/">https://fontawesome.com/</a> (trouver des icônes)</li>
+						<li><a href="https://thenounproject.com/">https://thenounproject.com/</a> (autres icônes)</li>
+						<li><a href="http://animista.net/play/basic">http://animista.net/play/basic</a> (animations en CSS)</li>
+						<li><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">https://css-tricks.com/snippets/css/a-guide-to-flexbox/</a> (guide sur flexbox)</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

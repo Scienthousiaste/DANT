@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>TP Javascript</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/shared.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>TP JavaScript</h1>
+				</section>
+				<section>
+					<h3>Objectif</h3>
+					<ul class="leftlist">
+						<li>L'objectif de ce TP est de vous faire pratiquer JavaScript, HTML, CSS, et git</li>
+						<li>Pour cela, vous allez créer votre propre jeu de puissance 4</li>
+						<li>Vous pouvez voir un puissance 4 ici : <a href="https://c4arena.com/">https://c4arena.com/</a></li>
+						<li>A faire seul ou à deux</li>
+						<li>Dans tous les cas : utilisez git !</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Règles du puissance 4</h3>
+					<ul class="leftlist">
+						<li>On joue sur un tableau de 6 lignes et 7 colonnes</li>
+						<li>2 joueurs placent alternativement une pièce de leur couleur</li>
+						<li>On peut jouer sur chaque colonne, mais uniquement sur la position libre la plus basse (la pièce jouée tombe)</li>
+						<li>Le premier joueur à aligner 4 pions horizontalement, verticalement ou diagonalement a gagné</li>
+						<li>On ne peut pas passer</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Ce qui est attendu</h3>
+					<ul class="leftlist">
+						<li>Les règles sont respectées</li>
+						<li>Une interface agréable à utiliser</li>
+						<li>Le jeu détecte lorsqu'un joueur a gagné, indique le gagnant, et propose de faire une nouvelle partie</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Si vous vous ennuyez</h3>
+					<ul class="leftlist">
+						<li>Trouver comment faire l'animation de chute</li>
+						<li>Permettre aux joueurs de choisir la couleur de leur pièces</li>
+						<li>Permettre de revenir en arrière</li>
+						<li>Enchainer sur un jeu <a href="https://www.eothello.com/">d'Otello / Reversi</a></li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

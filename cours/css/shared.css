@@ -1,0 +1,65 @@
+
+.left, p.left {
+    text-align: left;
+}
+
+.reveal ul.leftList {
+	display: flex;
+	flex-direction: column;
+ 	align-items: flex-start;
+}
+.reveal ul.leftList li {
+	padding-left: 20px;
+}
+
+code.bash {
+    color: #ddd;
+}
+
+.reveal pre code.html {
+	font-size: 1em;
+}
+.reveal pre {
+	line-height: auto;
+}
+
+.reveal .mono {
+	font-family: "Courier New", Courier, monospace;
+}
+
+.reveal .center {
+	text-align: center;
+}
+.reveal h1 span.lowercase, .reveal h2 span.lowercase, .reveal h3 span.lowercase, 
+.reveal h4 span.lowercase, .reveal h5 span.lowercase, .reveal h6 span.lowercase {
+	text-transform: lowercase;
+}
+
+.reveal #sendDataSlide form {
+	text-align: center;
+	margin: auto;
+}
+
+.icon2 {
+	padding-left: 30px;
+	font-size: 30px;
+	color: lightgray;
+}
+
+#boxsizing-img {
+	width: 40%;
+	margin: auto;
+}
+
+.appearOnHover {
+	font-size: 30px;
+	visibility: hidden;
+}
+li:hover .appearOnHover {
+	visibility: visible;
+}
+
+
+code {
+	font-family: "Courier New", Courier, monospace!important;
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="utf-8">
+	    <title>Soumettre un exercice</title>
+	    <link rel="stylesheet" href="./css/style.css">
+	</head>
+<body>
+
+	<p> Sur cette page, vous pouvez envoyer un fichier HTML qui sera alors stocké sur ce site. Pour cela, il faut indiquer votre prénom, puis choisir le fichier de votre ordinateur à envoyer. Seuls les fichiers HTML seront acceptés. <br>Vous pouvez envoyer autant de fichiers que vous le voulez (indiquez votre prénom <em>à chaque fois</em>), mais attention, <strong>vous ne pourrez pas les supprimer.</strong></p>
+	<form method="post", action="./php/submitExercise.php", enctype="multipart/form-data" id="fileForm">
+		<label for="name">Votre prénom : </label>
+		<input type="text", name="name", id="name", placeholder="Prenom"/>
+		<br/>
+		<input type="file" name="fichier">
+		<br/>
+		<button type="submit">Envoyer</button>
+	</form>
+</body>
+</html>

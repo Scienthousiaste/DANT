@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Ajax</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.0.13/css/all.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/js/all.min.js"></script>
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+		<link rel="stylesheet" href="../css/shared.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Ajax</h1>
+					<p>Aynschronous JavaScript and XML</p>
+				</section>
+
+				<section>
+					<h3>Ajax</h3>
+					<ul class="leftlist">
+						<li>Permet d'envoyer des requêtes HTTP (get, post) au serveur sans recharger toute la page (=> gros gains de performance en ne rechargeant que ce qui est nécessaire)</li>
+						<li>Objectif : rendre la page plus réactive</li>
+						<li>Permet les "Single Page Application"</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Concrètement</h3>
+					<p class="left">AJAX renvoyait historiquement du XML, mais aujourd'hui, on récupère généralement du texte ou du JSON en réponse aux requêtes AJAX</p>
+					<p class="left">AJAX est généralement utilisé à l'aide de jQuery (mais nous allons ici aussi faire sans jQuery)</p>
+					<p class="left">On utilisera pour notre part l'objet XMLHttpRequest</p>
+				</section>
+
+				<section>
+					<h3>Utilisation d'XMLHttpRequest</h3>
+					<ul class="leftlist">
+						<li>On créer une instance de XMLHttpRequest</li>
+<pre><code class="hljs js">var xhr = new XMLHttpRequest();</code></pre>
+						<li>On ouvre une requête</li>
+<pre><code class="hljs js">xhr.open('GET', 'doSomething/:parameter');</code></pre>
+						<li>On définit le comportement lorsqu'on reçoit la réponse du serveur</li>
+<pre><code class="hljs js">xhr.onload = function() {if (xhr.status === 200) {...} else {...}}</code></pre>
+						<li>On envoie la requête</li>
+<pre><code class="hljs js">xhr.send();</code></pre>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Example pour une requête get</h3>
+<pre><code class="hljs js">var xhr = new XMLHttpRequest();
+xhr.open('GET', 'myservice/username?id=some-unique-id');
+xhr.onload = function() {
+    if (xhr.status === 200) {
+        alert('User\'s name is ' + xhr.responseText);
+    }
+    else {
+        alert('Request failed.  Returned status of ' + xhr.status);
+    }
+};
+xhr.send();</code></pre>
+					<p><a href="https://blog.garstasio.com/you-dont-need-jquery/ajax/" target="_blank">Lien avec d'autres exemples</a> (et comparaisons avec/sans jQuery)</p>
+				</section>
+
+				<section>
+					<h3>Pratiquons</h3>
+					<ul class="leftlist">
+						<li>Récupérez le dossier AJAX disponible sur <a href="https://github.com/Scienthousiaste/DANT" target="_blank">le github du cours</a>.</li>
+						<li>Dans ce dossier, installez les dépendances avec la commande :</li>
+<pre><code class="mono">~ npm install</code></pre>
+						<li>Lancez le serveur avec :</li>
+<pre><code class="mono">~ npx nodemon</code></pre>
+						<li>Ouvrez <a href="http://localhost:3000" target="_blank">localhost:3000</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Les sous-routeurs Node</h3>
+					<p class="left">Dans index.js, on peut voir le code :</p>
+<pre><code class="hljs js">/*
+  Sous routeur (le fichier appelé par require 
+  doit utiliser express.Router())
+  De plus, toutes les routes commenceront par "animals".
+*/
+app.use('/animals', require('./server/animalsRequests'));</code></pre>
+					<p class="left">Et dans server/animalsRequest.js :</p>
+<pre><code class="hljs js">var express = require('express')
+var router = express.Router();
+router.get('/getAnimals', function(req, res) {...})
+router.post('/changeNames', function(req, res) {...})
+module.exports = router;</code></pre>
+				</section>
+
+				<section>
+					<h3>Librairie AJAX en front end</h3>
+					<p class="left">Le fichier public/js/ajax.js :</p>
+					<ul class="leftlist">
+						<li>Définit un objet <span class="mono">ajax</span>, contenant les méthodes <span class="mono">get</span> et <span class="mono">post</span>, qui se chargent de tous les appels à l'objet XMLHttpRequest</li>
+						<li>Définit une fonction <span class="mono">param</span>, qui encode un objet javascript en une chaine de caractères de type URL</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Front : ajax.get et ajax.post</h3>
+					<p class="left">Ces fonctions prennent 4 arguments :</p>
+					<ul class="leftlist">
+						<li>L'URL de la requête à appeler</li>
+						<li>Un objet contenant les données à envoyer à la requête</li>
+						<li>La fonction à appeler en cas de réussite (qui reçoit la réponse sous une forme textuelle)</li>
+						<li>La fonction à appeler en cas d'échec de la requête</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Front : animals.js</h3>
+					<p class="left">Ce fichier définit 2 requêtes ajax :</p>
+					<ul class="leftlist">
+						<li>Une requête get sur l'URL /animals/getAnimals pour récupérer des animaux lorsqu'on change la valeur du "select"</li>
+						<li>Une requête post sur l'URL /animals/changeNames pour changer les noms des animaux quand on clique sur le bouton correspondant</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Back : server/animalsRequests.js</h3>
+					<p class="left">Ce fichier écoute les 2 requêtes dans un sous-routeur sur la route '/animals/'</p>
+					<ul class="leftlist">
+						<li>router.get('/getAnimals', ...) renvoie les animaux demandés. La requête attend 1 seconde avant de renvoyer un résultat (pour simuler une requête non immédiate, et montrer la nécessité de "faire attendre" l'utilisateur)</li>
+						<li>router.post('/changeNames', ...) modifie les noms des animaux, il faut redémarrer le serveur pour voir à nouveau les noms de départ</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Back : ce qui est renvoyé</h3>
+					<p class="left">Un template compilé comprenant les noms et images d'animaux est renvoyé. Le front-end se chargera d'afficher ce HTML au bon endroit à réception. On indique à handlebars que le layout par défaut ne doit pas être inclu avec {layout: false}</p>
+<pre><code class="hljs js">res.render('animals.hbs', {layout: false, data: felins});</code></pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

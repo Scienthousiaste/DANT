@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>TP Git HTML CSS</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/shared.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+		<style>
+			#groupInstructions {
+				display: flex;
+				width: 1000px;
+			}
+			#buffer {
+				width: 20px;
+				height: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>TP Git - HTML - CSS</h1>
+				</section>
+				<section>
+					<h3>GitHub</h3>
+					<p>Tout d'abord, si ce n'est pas déjà fait, créer un compte sur <a href="https://github.com/" target="_blank">https://github.com/</a></p>
+					<p>Dès que c'est fait, envoyez moi un email, contenant [WEBDANT] dans l'objet, et un lien vers votre compte sur github</p>
+				</section>
+				<section>
+					<h3>Ligne de commande</h3>
+					<p>Quelques commandes indispensables</p>
+					<pre><code data-trim class="nohighlight bash">~ pwd</code></pre>
+					<pre><code data-trim class="nohighlight bash">~ ls</code></pre>
+					<pre><code data-trim class="nohighlight bash">~ cd [path]</code></pre>
+					<pre><code data-trim class="nohighlight bash">~ cat [fileName]</code></pre>
+					<pre><code data-trim class="nohighlight bash">~ man [commandName]</code></pre>
+				</section>
+				<section>
+					<h3>Configuration - passer le proxy à Jussieu</h3>
+					<div>Pour ceux qui travaillent sur windows, suivez les instructions ici : <a href="https://openclassrooms.com/fr/courses/2342361-gerez-votre-code-avec-git-et-github/2433596-installez-git#/id/r-2448505">openclassrooms git</a></div>
+					<p>A priori, à ne faire qu'une seule fois</p>
+					<pre><code data-trim class="nohighlight bash">~ git config --global http.proxy http://proxy.ufr-info-p6.jussieu.fr:3128</code></pre>
+					<pre><code data-trim class="nohighlight bash">~ git config --global https.proxy https://proxy.ufr-info-p6.jussieu.fr:3128</code></pre>
+					<pre><code data-trim class="nohighlight bash">~ git config --global user.name "Votre nom"</code></pre>
+					<pre><code data-trim class="nohighlight bash">~ git config --global user.email email@example.com</code></pre>
+				</section>
+				<section data-transition="slide" data-background="#eeeeee" data-background-transition="zoom">
+					<h3>Workflow git</h3>
+					<img src="https://softcover.s3.amazonaws.com/636/learn_enough_git/images/figures/git_status_sequence.png"/>
+				</section>
+				<section>
+					<h3>Git en pratique</h3>
+					<pre><code data-trim class="nohighlight bash">~ git clone "chemin/sur/github" "nom du dossier a créer localement"</code></pre>
+					<pre><code data-trim class="nohighlight bash">~ git status</code></pre>
+					<pre><code data-trim class="nohighlight bash">~ git add -u | git add -A</code></pre>
+					<pre><code data-trim class="nohighlight bash">~ git commit -m "message de commit"</code></pre>
+				</section>
+				<section>
+					<h3>TP git</h3>
+					<p class="left">Répartissez vous en groupes de 2 (ou 3, mais avec 2 postes) avec votre voisin immédiat</p>
+					<div id="groupInstructions">
+						<div>
+							Le poste côté fenêtre
+							<ul>
+								<li>créé un repo "Andy Warhol"</li>
+								<li>clône ce projet</li>
+								<li>fait un premier commit</li>
+								<li>ajoute l'autre personne en collaborateur</li>
+								<li>clône l'autre projet</li>
+							</ul>
+						</div>
+						<div id="buffer"></div>
+						<div>
+							Le poste côté porte
+							<ul>
+								<li>créé un repo "WikiDANT"</li>
+								<li>clône ce projet</li>
+								<li>fait un premier commit</li>
+								<li>ajoute l'autre personne en collaborateur</li>
+								<li>clône l'autre projet</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section>
+					<h3>Ajouter un collaborateur sur github</h3>
+					<img src="https://i.stack.imgur.com/50mL0.png">
+				</section>
+				<section>
+					<h3>Objectifs du projet "Andy Warhol"</h3>
+					<ul class="leftlist">
+						<li>Faire un bloc de 3 * 3 carrés, qui ne fait pas 100% de la hauteur, centré au mieux possible au milieu de la page</li>
+						<li>Chacun de ces carrés : 
+							<ul>
+								<li>a une couleur flashy différente (<a href="https://i.pinimg.com/originals/34/d6/c5/34d6c5928eb8a28f98bd30e5d47e4ac5.png">cf Andy Warhol</a>)</li>
+								<li>contient une icône font awesome quelconque, parfaitement centrée, de couleur qui contraste bien avec le carré en dessous</li>
+							</ul>
+						</li>
+						<li>la couleur de l'icône et la couleur du carré derrière s'inversent quand on passe la souris sur le carré</li>
+				</section>
+				<section>
+					<h3>objectifs du projet "WikiDANT"</h3>
+					<ul class="leftlist">
+						<li>copier en partie les pages wikipedia sur la peinture "Dante aux enfers" <a href="https://fr.wikipedia.org/wiki/Dante_aux_enfers">française</a> et <a href="https://en.wikipedia.org/wiki/Dante_in_Hell">anglaise</a></li>
+						<li>Il s'agit de reproduire :
+							<ul>
+								<li>le texte (sans liens)</li>
+								<li>l'image sur la droite, avec son titre et une partie de la fiche technique</li>
+								<li>les titres, sous titres, leurs niveaux hierarchiques, le sommaire et les liens internes</li>
+								<li>la mise en forme générale (mais pas les menus)</li>
+							</ul>
+						</li>
+						<li>2 pages (1 pour chaque langue) = 2 documents HTML accessibles l'un de l'autre</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Organisation</h3>
+					<ul class="leftlist">
+						<li>Instructions : dès que vous avez chacun les 2 repo, choisissez un des 2 projets, puis travaillez dessus <em><strong>ensemble</strong></em> jusqu'à ce qu'il soit fini</li>
+						<li>Ne commencez l'autre projet que si vous avez fini le premier</li>
+						<li>N'oubliez pas : git, c'est big brother</li>
+						<li>L'objectif principal du TP : apprendre à travailler à plusieurs avec git</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Exemples fonctionnels</h3>
+					<p>Vous pouvez voir ma version des deux projets sur github : 
+					<a href="https://github.com/Scienthousiaste/DANT" target="_blank">https://github.com/Scienthousiaste/DANT</a>
+					</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

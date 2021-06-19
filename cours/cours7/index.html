@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>MongoDB</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.0.13/css/all.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/js/all.min.js"></script>
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+		<link rel="stylesheet" href="../css/shared.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>MongoDB</h1>
+					<p>Une base de données légère qui stocke et renvoie du JSON (JavaScript Object Notation)</p>
+				</section>
+
+				<section>
+					<h3>Vocabulaire MongoDB</h3>
+					<ul class="leftlist">
+						<li>DOCUMENT : une chaine de caractère (sous le format JSON), c'est l'unité de ce qui peut être stocké ou récupéré</li>
+						<li>COLLECTION : un groupe de documents, a priori qui suivent le même format.</li>
+						<li>DATABASE : peut contenir une ou plusieurs collections</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Mongoose</h3>
+					<p class="left">Pour travailler avec MongoDB dans Node.js, on utilise le package mongoose :</p>
+<pre><code class="hljs js">~ npm install mongoose</code></pre>
+					<p class="left">La connexion se fait à l'aide de la fonction mongoose.connect :</p>
+<pre><code class="hljs js">const mongoose = require('mongoose');
+
+mongoose.connect('__CONNEXION_STRING__')
+	.then(function() {console.log('connexion établie')})
+	.catch(function(err) {...})</code></pre>
+				</section>
+
+				<section>
+					<h3>Les schémas</h3>
+					<p class="left">Un schéma permet de spécifier le type des variables contenues dans un document qu'on va ajouter à notre base de données, on s'assure ainsi que notre base de données soit bien structurée.</p>
+<pre><code class="hljs js">const courseSchema = new mongoose.Schema({
+  name: String,
+  author: String,
+  tags: [ String ],
+  data: { type: Date, default: Date.now },
+  isPublished: Boolean
+}</code></pre>
+				</section>
+
+				<section>
+					<h3>Les types de données dans un schéma</h3>
+					<ul class="leftlist">
+						<li><span class="mono">String</span></li>
+						<li><span class="mono">Number</span></li>
+						<li><span class="mono">Date</span></li>
+						<li><span class="mono">Buffer</span> (données binaires)</li>
+						<li><span class="mono">Boolean</span></li>
+						<li><span class="mono">ObjectId</span> (réfèrence à un document mongoDB)</li>
+						<li><span class="mono">Array</span></li>
+					</ul>
+				</section>
+				
+				<section>
+					<h3>Les modèles</h3>
+					<p class="left">On construit ensuite un modèle à partir du schéma. Le modèle est une classe (=> commence par une majuscule) qui peut être appelée à l'aide du mot clé <span class="mono">new</span> pour fabriquer un nouvel objet</p>
+<pre><code class="hljs js">const Course = mongoose.model('Course', courseSchema);
+const course = new Course({
+  name: 'Cours de Node.js',
+  author: 'Timothée Behra',
+  tags: ['node', 'backend'],
+  isPublished: true
+})</code></pre>
+				</section>
+
+				<section>
+					<h3>Sauvegarder un document</h3>
+					<p class="left">La sauvegarde (= l'enregistrement dans notre base de données) d'un document se fait avec la méthode <span class="mono">save</span> des instances d'un modèle. <span class="mono">save()</span> est une fonction <strong><em>asynchrone</em></strong>.</p>
+<pre><code class="hljs js">async function createCourse() {
+  const result = await course.save();
+  console.log(result);
+}
+createCourse();</code></pre>
+				</section>
+
+				<section>
+					<h3>Le code asynchrone</h3>
+					<p class="left">
+						Une fonction asynchrone commence au moment où on l'appelle, mais ne finit pas instantanément. Cela peut poser un problème si le code qui suit dépend du résultat de la fonction asynchrone. Exemple :
+					</p>
+<pre><code class="hljs js">// Le script définit la fonction newFunction() {…}
+loadScript('/my/script.js'); 
+//JavaScript n'attend pas que le script soit chargé pour continuer
+newFunction(); // La fonction n'existe pas => erreur</code></pre>
+				</section>
+
+				<section>
+					<h3>Les callbacks</h3>
+					<p class="left">
+						Première solution : fournir un callback, une fonction qui sera appelée lorsque la tâche voulue sera terminée.
+					</p>
+<pre><code class="hljs js">function callbackFunction() {
+  alert("callback");
+}
+setTimeout(callbackFunction, 1000);</code></pre>
+					<p class="left">
+						Cette approche peut rendre le code très difficile à lire lorsqu'il y a plusieurs callback imbriqués (cette situation est appelée "callback hell").
+					</p>
+				</section>
+
+				<section>
+					<h3>Les promesses</h3>
+					<p class="left">
+						Une autre solution est de renvoyer une promesse, c'est à dire une instance de la classe <span class="mono">Promise</span>. Une promesse va être dans un état d'attente, puis va soit être résolue, soit rejetée. Pour "consommer" une promesse, on utilise <span class="mono">then</span>.
+					</p>
+<pre><code class="hljs js">//resolve et reject sont fournis par JavaScript
+let promise = new Promise(function(resolve, reject) {
+  setTimeout(() => resolve("c'est fait!"), 1000);
+});
+
+promise.then(
+  result => alert(result), // montre "c'est fait!" après 1 seconde
+  error => alert(error) // ne se produit pas
+);</code></pre>
+				</section>
+				<section>
+					<h3>Les mots clés async/await</h3>
+					<p class="left">
+						Enfin, une manière peut être plus intuitive d'utiliser les promesses est l'utilisation des mots clés <span class="mono">async</span> et <span class="mono">await</span>. <span class="mono">async</span> est utilisé pour désigner une fonction comme asynchrone. Une <span class="mono">async function</span> va nécessairement renvoyer une promesse, même si ce n'est pas nous qui l'écrivons.
+					</p>
+					<p class="left">
+						Le mot clé <span class="mono">await</span> permet de bloquer l'exécution du code jusqu'à ce que la promesse soit résolue. Attention cependant, il ne peut être utilisé QUE dans les <span class="mono">async function</span>.
+					</p>
+				</section>
+
+				<section>
+					<h3>Récupérer des documents</h3>
+					<p class="left">Le modèle créé avec mongoose.model fournit la méthode <span class="mono">find</span>, qui permet de retrouver des documents :</p>
+<pre><code class="hljs js">async function getCourses() {
+  const allCourses = await Course.find();
+  console.log(allCourses);
+}
+getCourses();</code></pre>
+					<p class="left"><span class="mono">find()</span> renvoie un objet documentQuery, qui fonctionne comme une promesse : il faut soit utiliser <span class="mono">then</span>, soit <span class="mono">await</span> avant d'utiliser le résultat.</p>
+				</section>
+				<section>
+					<h3>Filtrer les résultats</h3>
+					<p class="left">On peut filtrer les résultats à l'aide d'un ou plusieurs critères envoyés à find sous la forme d'un objet :</p>
+<pre><code class="hljs js">async function getCourses() {
+  const coursDeTimothee = await Course.find({
+    author: 'Timothée', 
+    isPublished: true
+  });
+  console.log(coursDeTimothee);
+}
+getCourses();</code></pre>
+				</section>
+
+				<section>
+					<h3>Requête plus complexe</h3>
+					<p class="left">On peut ensuite faire plusieurs actions sur les données récupérées, en sélectionner seulement un nombre précis avec <span class="mono">limit</span>, les trier avec <span class="mono">sort</span> (1 pour ordre ascendant, -1 pour ordre descendant), ne sélectionner qu'une partie des infos avec <span class="mono">select</span> (1 : on prend)
+<pre><code class="hljs js">async function getCourses() {
+  const courses = await Course
+    .find({author: 'Timothée'})
+    .limit(10)
+    .sort({ name: 1 })
+    .select({name: 1, tags: 1});
+  console.log(courses);
+}
+getCourses();</code></pre>
+				</section>
+
+				<section>
+					<h3>Opérateurs de comparaison</h3>
+					<ul class="leftlist">
+						<li><span class="mono">eq, ne</span> : égal, différent de</li>
+						<li><span class="mono">gt, gte, lt, lte</span> : plus grand, plus grand ou égal, plus petit, plus petit ou égal</li>
+						<li><span class="mono">in, nin</span> : inclus dans, non inclus dans</li>
+					</ul>
+					<p class="left">Pour utiliser un opérateur, on le précède d'un $ comme nom de propriété d'un objet :</p>
+<pre><code class="hljs js">const cars = await Car.find(
+{
+  price: {$gte: 5000, $lte: 20000},
+  brand: {$in, ['Renault', 'Peugeot']}
+})</code></pre>
+				</section>
+
+				<section>
+					<h3>Opérateurs logiques</h3>
+					<p class="left">Il existe 2 opérateurs logiques : <span class="mono">or</span> et <span class="mono">and</span> qui peuvent être utilisés sur les filtres à appliquer sur <span class="mono">find()</span>. <span class="mono">and</span> est le comportement par défaut, on a donc surtout besoin de <span class="mono">or</span>. On envoie les filtres non plus à find, mais un tableau de filtres à <span class="mono">or</span> :</p>
+<pre><code class="hljs js">/*
+  Sélectionner les voitures dont le prix est inférieur
+  à 10000 ou qui sont de la marque Porsche
+*/
+const carsIWant = await Car
+  .find()
+  .or([ 
+    {price : {$lte: 10000} }, 
+    {brand: 'Porsche'} 
+  ])
+</code></pre>
+				</section>
+
+				<section>
+					<h3>Compter les résultats</h3>
+					<p class="left">Si on cherche à seulement compter les résultats plutôt que les sélectionner, on utilise <span class="mono">count()</span> :</p>
+<pre><code class="hljs js">const numberCheapCars = await Car
+  .find({price : {$lte: 10000} })
+  .count()
+  ])
+</code></pre>
+				</section>
+
+				<section>
+					<h3>Pagination</h3>
+					<p class="left">On peut utiliser la méthode <span class="mono">skip(numberResultsToSkip)</span> pour implémenter un système de pagination :
+<pre><code class="hljs js">async function getCars(pageNumber, pageSize) {
+  const cheapCars = await Car
+    .find({price : {$lte: 10000} })
+    .skip((pageNumber - 1) * pageSize)
+    .limit(pageSize)
+    ])
+}</code></pre>
+				</section>
+
+				<section>
+					<h3>ObjectId</h3>
+					<p class="left">MongoDB attribue automatiquement un identifiant unique à chaque document, de nom <span class="mono">_id</span> et de type ObjectId.</p>
+					<p class="left">Cet Id peut être employé pour retrouver directement un document spécifique avec la méthode <span class="mono">findById()</span></p>
+				</section>
+
+				<section>
+					<h3>Modifier un document</h3>
+					<p class="left">Il y a plusieurs manières de modifier un document existant. On peut soit le récupérer d'abord :</p>
+<pre><code class="hljs js">const docToUpdate = await Doc.findById(id);
+if (!docToUpdate) return;
+docToUpdate.author = "New Author";
+doc.save();</code></pre>
+					<p class="left">Ou bien le modifier directement :</p>
+<pre><code class="hljs js">const result = await Doc.update({_id: id}, {
+  $set: {
+    author: "New Author";
+  }
+});
+//result est un objet comprenant le nombre d'objets modifiés</code></pre>
+					<p class="left"><span class="mono">$set</span> est un "update operator". <a href="https://docs.mongodb.com/manual/reference/operator/update/" target="_blank">Il en existe d'autres</a>.</p>
+				</section>
+
+				<section>
+					<h3>Supprimer un ou plusieurs documents</h3>
+<pre><code class="hljs js">async function removeDoc(id) {
+  const result = await Doc.deleteOne({_id: id});
+  // indicates the number of deleted documents
+  console.log(result); 
+}
+removeDoc('1234abcde000123');</code></pre>
+					<p class="left">Supprimer plusieurs documents</p>
+<pre><code class="hljs js">async function removeDocs(criteria) {
+  const result = await Doc.deleteMany(criteria);
+  // indicates the number of deleted documents
+  console.log(result); 
+}
+//removes all docs from author Timothée
+removeDocs({author: "Timothée"});</code></pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

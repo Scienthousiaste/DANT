@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>JavaScript</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.0.13/css/all.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/js/all.min.js"></script>
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+		<link rel="stylesheet" href="../css/shared.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>JavaScript</h1>
+					<p>Langage de script côté client</p>
+				</section>
+				<section>
+					<h3>Introduction</h3>
+					<ul class="leftlist">
+						<li>Langage élaboré en 1995 par le navigateur Netscape (ancêtre de Firefox)</li>
+						<li>Le JavaScript n'a rien à voir avec Java !</li>
+						<li>Standardisé par l'ECMA (chaque navigateur implémente sa version du JavaScript)</li>
+						<li>Est exécuté par le navigateur et permet de modifier la page sans la recharger</li>
+					</ul>	
+				</section>
+				<section>
+					<h3>Langage le plus populaire en 2019</h3>
+					<a href="https://insights.stackoverflow.com/survey/2019?utm_source=so-owned&utm_medium=blog&utm_campaign=dev-survey-2019&utm_content=launch-blog#most-popular-technologies" target="_blank"><img src="./img/stackoverflowsurvey.png"></a>
+				</section>
+				<section>
+					<h3>JavaScript : au coeur du web</h3>
+					<p class="left">JavaScript n'est plus aujourd'hui limité à tourner côté client. Grâce à l'écosystème Node.js, JavaScript est très présent dans 3 domaines :</p>
+					<ul class="leftlist">
+						<li>Web front-end (jQuery, React, Angular, Vue)</li>
+						<li>Développement mobile (React native)</li>
+						<li>Web back-end (Express JS)</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Tous les JS ne se valent pas</h3>
+					<ul class="leftlist">
+						<li>ECMAScript / JavaScript évoluent vite</li>
+						<li>Dernière grosse version avec des changements majeurs : ES2015, ou ES6, publiée en juin 2015</li>
+						<li>Comme <a href="https://caniuse.com/#search=ecmascript%206">tous les navigateurs ne sont pas forcément à jour sur les dernières versions du JavaScript</a>, il est préférable de ne pas utiliser les dernières features du langage côté client</li>
+						<li>Il y a énormément de librairies, framework, etc</li>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<h3>Inclure du code JavaScript</h3>
+						<p class="left">Il existe plusieurs manières d'inclure du JavaScript dans un fichier HTML :</p>
+						<ul class="leftlist">
+							<li>Dans un fichier .js dont le chemin est indiqué par l'attribut "src" d'une balise script</li>
+	<pre><code class="hljs html">&lt;script src="./scripts/monScript.js"&gt;&lt;/script&gt;</code></pre>
+							<li>À l'intérieur d'une balise script (celle-ci peut se trouver n'importe où dans le document)</li>
+	<pre><code class="hljs html">&lt;script&gt;alert("Bonjour !");&lt;/script&gt;</code></pre>
+							<li>Comme valeur de <a href="https://jsfiddle.net/r8zjsn4q/4/" target="_blank">certains attributs de balises</a></li>
+						</ul>
+					</section>
+					<section>
+						<h3>Inclure du code JavaScript</h3>
+						<p class="left">Si la balise <span class="mono">&lt;script&gt;</span> est incluse dans le head, le code s'exécute avant le chargement de la page, si elle est dans le body, le code s'exécute au cours du chargement.</p>
+					</section>
+				</section>
+				<section>
+					<h3>Syntaxe - Règles générales</h3>
+					<ul class="leftlist">
+						<li>On peut mettre des espaces n'importe où</li>
+						<li>On sépare les commandes par des point-virgules <span class="mono">;</span></li>
+						<li>Les nombres réels sont notés avec un <span class="mono">.</span> et non pas une virgule</li>
+<pre><code class="hljs html">var pi = 3.1415926535;</code></pre>
+						<li>Commentaires : <span class="mono">//...</span> ou <span class="mono">/*...*/</span></li>
+<pre><code class="hljs html">// ceci est un commentaire en une ligne
+/*
+	ceci est aussi un commentaire,
+	en plusieurs lignes
+*/</code></pre>
+					</ul>
+				</section>
+				<section>
+					<h3>Un langage très permissif</h3>
+					<p class="left">
+						Attention, le JavaScript est un langage TRÈS permissif, et contient également des comportements <a href="https://medium.com/javascript-non-grata/the-top-10-things-wrong-with-javascript-58f440d6b3d8">extrêmement étranges et/ou contre intuitifs</a>. Beaucoup d'erreurs de la part du développeur vont être corrigées/ignorées par les navigateurs. Ce n'est pas forcément une bonne nouvelle, même pour des développeurs débutants : le débugage peut parfois être très difficile, car plutôt que de causer une erreur, on obtient souvent un comportement inattendu.
+					</p>
+				</section>
+				<section>
+					<h3>Les variables</h3>
+					<ul class="leftlist">
+						<li>Déclarées avec le mot clé <span class="mono">var</span> (pour l'instant). Ne pas l'omettre même si ça marche sans !</li>
+						<li>Les noms de variables ne peuvent contenir que des lettres, chiffres, ou le caractère "_" (underscore)</li>
+						<li>Portée : globale (si déclarée en dehors d'une fonction) ou locale (si déclarée dans une fonction)</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Les types de variables</h3>
+					<p class="left">On peut utiliser <span class="mono">typeof(variable);</span> pour voir le type d'une variable. Les types courants :</p>
+					<ul class="leftlist">
+						<li><span class="mono">string</span></li>
+						<li><span class="mono">number</span> (pas de différence entre entier / réel !)</li>
+						<li><span class="mono">boolean</span></li>
+						<li><span class="mono">object</span></li>
+						<li><span class="mono">undefined</span></li>
+						<li><span class="mono">function</span></li>
+					</ul>
+				</section>
+				<section>
+					<h3>Les tableaux</h3>
+					<p class="left">Les tableaux en JavaScript commencent à l'indice 0. Contrairement au C, ils peuvent contenir n'importe quels autres types, et peuvent changer de taille. Ils sont simples à manipuler, et là aussi le JavaScript est très (beaucoup trop) permissif.</p>
+<pre><code class="hljs js">var a = ['a', 'b', 'c'];
+var b = [1, '2', 'abc', [1, 2, 3], a];
+b[3][2]; // renvoie 3
+b[10]; // hors du tableau : vaut undefined
+b[-1] = 'moins un'; // assignation valide !
+b[Infinity] = NaN; // ça aussi !
+b[NaN] = 33; // et puis ça !
+b[-Infinity] = b[NaN]; // et même ça
+b[1 + '1'] = '1' + 1; // AH.
+b[[]] = 4; //si si
+b[a[b[undefined]]] = 241; //bon là d'accord.. ah si c'est toujours bon
+</code></pre>
+				</section>
+				<section>
+					<h3>Syntaxe - les boucles</h3>
+					<ul class="leftlist">
+						<li>
+							Boucle for
+<pre><code class="hljs js">for (var i = 0; i < 5; i++) {
+  ...
+}
+</code></pre>
+						</li>
+						<li>
+							Boucle while et do while
+<pre><code class="hljs js">while (test) {
+  ...
+}
+
+do {...} while (test)
+</code></pre>
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Syntaxe - les conditions</h3>
+<pre><code class="hljs js">if (age >= 18 && a_permis && est_sobre) {
+  conduire();
+}
+else if (a_velo || a_trotinette) {
+  rouler();
+}
+else {
+  marcher();
+}
+</code></pre>
+				<p class="left">Opérateurs :</p>
+				<ul class="leftlist">
+					<li>Egalité : <span class="mono">==</span>, <span class="mono">!=</span> (ignore le type, attention !)</li>
+					<li>"Identique à" : <span class="mono">===</span>, <span class="mono">!==</span> (valeur et type égaux)</li>
+					<li>Inférieur, supérieur : <span class="mono">=&lt;</span>, <span class="mono">&gt;</span>=, <span class="mono">&gt;</span>, <span class="mono">&lt;</span></li>
+					<li>Logique : <span class="mono">&&</span>, <span class="mono">||</span></li>
+				</ul>
+				</section>
+				<section>
+					<h3>Les fonctions</h3>
+<a href="https://jsfiddle.net/58bsu0dp/1/" target="_blank">
+<pre><code class="hljs js">// Déclaration de la fonction
+function maFonction(argument1, argument2) {
+  var res = argument1 + argument2;
+  if (argument1 && argument2) {
+    alert(argument1.toString() + ' + ' + argument2.toString() + ' = ' + res);
+  }
+  for (var i = 0; i &lt; arguments.length ; i++) {
+    alert('arg ' + i + ' : ' + arguments[i]);
+  }
+}
+maFonction(1, 2); // Appel
+/*
+  on peut accéder à des arguments non définis lors de la
+  définition de la fonction via la variable arguments
+*/
+maFonction(5, 6, 7);
+maFonction(); //si on ne précise pas les arguments, ils valent undefined</code></pre></a>
+				</section>
+
+				<section>
+					<h3>Fonctions d'ordre supérieur</h3>
+					<p class="left">Une fonction peut prendre une fonction en argument</p>
+<a href="https://jsfiddle.net/mwef9y7b/" target="_blank">
+<pre><code class="hljs js">function carre(x) {
+  return x * x;
+}
+
+function map(a, f) {
+  for (var i = 0; i &lt; a.length; i++) {
+    a[i] = f(a[i]);
+  }
+  return a.toString();
+}
+
+alert(map([1, 2, 3, 4, 5], carre));
+</code></pre></a>
+
+				</section>
+				<section>
+					<h3>Les chaînes de caractères</h3>
+					<ul>
+						<li>
+							Concaténation avec <span class="mono">+</span> :
+<pre><code class="hljs js">var a = "Bonjour " + "DANT";
+</code></pre>
+						</li>
+						<li>Longueur avec l'attribut length
+<pre><code class="hljs js">var chaine = "Une chaine";
+var longueur = chaine.length;
+</code></pre>
+						</li>
+						<li>Extraction d’une partie de la chaîne :
+<pre><code class="hljs js">var dateImportante = "26/09/1983";
+var carac = dateImportante.charAt(2);
+// Extrait le caractère en position 2 de la chaîne
+var mois = dateImportante.substring(3, 5);
+//caractère position 3 compris, position 5 exclus
+</code></pre>
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Les objets</h3>
+					<ul class="leftlist">
+						<li>L’opérateur <span class="mono">New</span> permet de créer une instance d'un objet</li>
+						<li>Ex d'objets prédéfinis : <span class="mono">Array</span>, <span class="mono">Date</span>, <span class="mono">Function</span>, <span class="mono">Number</span>, <span class="mono">Object</span>, <span class="mono">String</span></li>
+<pre><code class="hljs js">texte = new String("Une chaîne de caractère");
+typeof(texte); // 'object'
+typeof("Une chaîne de caractère"); // 'string'
+texte == "Une chaîne de caractère"; //true
+texte === "Une chaîne de caractère"; //false
+</code></pre>
+						<li>Objets instanciés par le navigateur : <span class="mono">window</span>, <span class="mono">document</span>, <span class="mono">console</span></li> 
+					</ul>
+				</section>
+				<section>
+					<h3>Les objets - création</h3>
+					<p>Un objet JavaScript est simplement un tableau associatif !</p>
+<pre><code class="hljs js">obj = new Object();
+obj["attribut"] = "valeur";
+// équivalent à obj.attribut = "valeur";
+
+obj["methode"] = function(p) { alert("parametre : " + p);};
+// ou obj.methode = ...
+
+alert(obj.attribut);
+obj.methode("test");
+</code></pre>
+				</section>
+				<section>
+					<h3>Les objets - création</h3>
+					<p class="left">Déclarer un constructeur d'objet :</p>
+
+<a href="https://jsfiddle.net/n0o5x146/" target="_blank">
+<pre><code class="hljs js">function Ninja(clan, attaque) {
+  this.clan = clan;
+  this.attaque = attaque;
+  this.description = function() {
+    alert("Ninja du clan " + clan + ", attaque avec " + attaque);
+  }
+}
+var gontran = new Ninja("Kawakami" , "kusarigama");
+gontran.description();
+</code></pre>
+</a>
+					<p class="left">Notez bien la convention : les constructeurs d'objets commencent par une majuscule, les instances par une minuscule.</p>
+				</section>
+				<section>
+					<h3>Les objets - création</h3>
+					<p class="left">Création directe sous forme de tableau associatif :</p>
+<a href="https://jsfiddle.net/rjq746cm/" target="_blank">
+<pre><code class="hljs js">var jordan = {
+  clan: "Shimura",
+  attaque: "ninjato",
+  description: function() {
+    alert("Ninja du clan " + this.clan + ", attaque avec " + this.attaque);
+  }
+};
+jordan.description();
+</code></pre>
+</a>
+				</section>
+				<section>
+					<h2>JavaScript <br>Les événements</h1>
+				</section>
+				<section>
+					<h3>Les événements</h3>
+					<ul class="leftlist">
+						<li>Les événements servent à interagir avec l'utilisateur (détection des clics, modifications de formulaires, ...)</li>
+						<li>Chaque événement a un identifiant de type <span class="mono">onEvenement</span> : 
+							<ul>
+								<li><span class="mono">onLoad</span> (l'élément s'est chargé)</li>
+								<li><span class="mono">onClick</span> (clic sur l'élément)</li>
+								<li><span class="mono">onMouseOver</span> (on passe la souris sur l'élément)</li>
+							</ul>
+						</li>
+						<li>Liste complète (et impressionnante) ici : <a href="https://www.w3schools.com/jsref/dom_obj_event.asp" target="_blank">https://www.w3schools.com/jsref/dom_obj_event.asp</a></li>
+					</ul>
+				</section>
+				<section>
+					<h3>Utilisation des événements</h3>
+					<ul class="leftlist">
+						<li>
+							Un événement peut exécuter du code javascript
+							<ul>
+								<li>Une ou plusieurs instructions</li>
+								<li>En général : un appel de fonction</li>
+							</ul>
+						</li>
+						<li>
+							Activation :
+<pre><code class="hljs html"><balise onEvenement="code javascript;"></balise>
+</code></pre>
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>L'événement onLoad</h3>
+					<p class="left">Sur body :</p>
+<pre><code class="hljs html">&lt;body onLoad="myfunc();"&gt;
+</code></pre>
+					<ul class="leftlist">
+						<li>Se produit lorsqu’une page web est totalement chargée dans la fenêtre du navigateur</li>
+					</ul>
+					<p class="left">Sur une image :</p>
+<pre><code class="hljs html">&lt;img src="w3javascript.gif" onLoad="afterImageLoad();"&gt;
+</code></pre>
+					<ul class="leftlist">
+						<li>L'événement se produit (la fonction est appelée) une fois l'image chargée.</li>
+					</ul>
+				</section>
+				<section>
+					<h3>L'événement onClick</h3>
+					<ul class="leftlist">
+						<li>Se produit lorsque l’utilisateur clique sur un élément spécifique dans une page, comme un lien hypertexte, une image, un bouton, du texte, etc.</li>
+						<li>Ces éléments sont capables de <a href="https://jsfiddle.net/4x7vynom/" target="_blank">répondre séparément à cet événement</a></li>
+						<li>Il peut également être déclenché lorsque l’utilisateur clique n’importe où sur la page s’il a été associé non pas à un élément spécifique, mais à l’élément body tout entier</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Événements sur la page</h3>
+					<ul class="leftlist">
+						<li><span class="mono">onError</span> : une erreur durant le chargement de la page</li>
+						<li><span class="mono">onLoad</span> : au chargement de la page</li>
+						<li><span class="mono">onUnload</span> : l'utilisateur quitte la page</li>
+						<li><span class="mono">onResize</span> : la fenêtre est redimensionnée</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Événements liés à la souris</h3>
+					<ul class="leftlist">
+						<li><span class="mono">onClick</span> : clic sur l'élément</li>
+						<li><span class="mono">onDblclick</span>: double clic sur l'élément</li>
+						<li><span class="mono">onDragdrop</span> : drag and drop sur la fenêtre du navigateur</li>
+						<li><span class="mono">onMouseOver</span> : la souris passe sur un élément</li>
+						<li><span class="mono">onMouseOut</span> : la souris quitte un élément</li>
+						<li><span class="mono">onFocus</span> : le focus est donné à un élément</li>
+						<li><span class="mono">onBlur</span> : un élément perd le focus</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Événements liés aux formulaires</h3>
+					<ul class="leftlist">
+						<li><span class="mono">onChange</span> : modification d'un champ de données</li>
+						<li><span class="mono">onReset</span> : effacement d'un formulaire à l'aide du bouton Reset. </li>
+						<li><span class="mono">onSelect</span> : sélection d'un texte dans un champ "text" ou "textarea" </li>
+						<li><span class="mono">onSubmit</span> : clic sur le bouton de soumission d'un formulaire</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Événements liés au clavier</h3>
+					<ul class="leftlist">
+						<li><span class="mono">onKeyDown</span> : appui sur une touche du clavier</li>
+						<li><span class="mono">onKeyUp</span> : relâchement d'une touche</li>
+						<li><span class="mono">onKeyPress</span> : appui et maintien sur une touche </li>
+					</ul>
+				</section>
+				<section>
+					<h2>JavaScript <br>interaction avec le html</h1>
+				</section>
+				<section>
+					<h3>Les objets window et document</h3>
+					<p class="left">
+						L'objet window représente la fenêtre du navigateur : c'est l'objet tout en haut de la hiérarchie.<br>
+						L'objet document représente la page HTML elle même.</p>
+<pre><code class="hljs js">window.document === document; // renvoie true
+</code></pre>
+					<p class="left">Quelques propriétés :</p>
+<pre><code class="hljs js">window.location; //objet contenant des informations sur l'URL (permet également de changer d'URL)
+document.title; // le titre
+document.forms; // un tableau des formulaires du document
+document.links; // les liens contenus dans le document
+</code></pre>
+				</section>
+				<section>
+					<h3>Récupérer un élément HTML</h3>
+					<p class="left">
+						A partir des méthodes de l'objet document, on peut récupérer un élément HTML en JavaScript :
+					</p>
+<pre><code class="hljs js">/* Récupèrer l'élément avec l'id idElement : */
+document.getElementById("idElement");
+
+/* exactement comme sélecteur CSS, récupère le premier élément qui correspond */
+document.querySelector("selecteur");
+/* récupère un tableau des éléments qui correspondent : */
+document.querySelectorAll("selecteur");
+
+/* autres méthodes existantes : */
+document.getElementsByTagName("div");
+document.getElementsByClassName("maclasse");
+</code></pre>
+				</section>
+				<section>
+					<h3>Modifier un élément</h3>
+					<p class="left">
+						Une fois l'élément HTML sous forme d'un objet JavaScript récupéré, on peut le modifier en agissant sur ses propriétés :
+					</p>
+<a href="https://jsfiddle.net/snh5be1m/4/" target="_blank">
+<pre><code class="hljs js">var important = document.getElementById("important");
+important.setAttribute("class", "hyperImportant");
+
+/*
+  Modification du style.
+  Attention, les noms en JavaScript des propriétés de l'objet style
+  ne sont pas tous identiques aux noms des propriétés CSS...
+*/
+important.style.border = "solid 2px green";
+important.style.fontSize = 33px;
+important.style.backgroundColor = "red";
+important.textContent = important.textContent + "hyper important !"
+</code></pre></a>
+</section>
+
+				
+				<section>
+					<h3>Autre exemple de récupération et modification d'un élément</h3>
+<a href="https://jsfiddle.net/swxv4qdp/">
+<pre><code class="hljs html">&lt;h1&gt;L'événement onClick&lt;/h1&gt;
+&lt;p&gt;Exemple ou l'événement onclick est utilisé pour appeler une fonction qui utilise l'élément cliqué.&lt;/p&gt;
+&lt;button onClick="myFunction(this)"&gt;Copie moi !&lt;/button&gt;
+&lt;button onClick="myFunction(this)"&gt;Moi moi moi&lt;/button&gt;
+&lt;button onClick="myFunction(this)"&gt;Non! Moi!&lt;/button&gt;
+&lt;p id="myp"&gt; ~ vide ~ &lt;/p&gt;
+&lt;script&gt;
+  function myFunction(element) {
+    document.getElementById("myp").innerHTML = element.innerHTML;
+  }
+&lt;/script&gt;
+</code></pre></a>
+				</section>
+				<section>
+					<h3>Écouter un événement purement en JavaScript</h3>
+					<p class="left">
+						On utilise</p>
+<pre><code class="hljs js">element.addEventListener("event", function() {
+  ... faireDesChoses ici ... ;
+});</code></pre>
+					<p class="left">
+						Attention, notez bien : quand on le nomme en javascript, l'événement est spécifié sans le "on", et toujours <strong>entièrement en minuscule</strong> (ex : <span class="mono">click</span>, <span class="mono">mouseover</span>, <span class="mono">keypress</span>). <em>Si on met une majuscule, l'événement ne sera pas pris en compte</em>.
+					</p>
+				</section>
+				<section>
+					<h3>La console</h3>
+					<ul class="leftlist">
+						<li>La manière d'ouvrir la console JavaScript dépend du navigateur et du système d'exploitation. Trouvez comment faire sur l'ordinateur sur lequel vous travaillez, c'est un outil indispensable !</li>
+						<li>On peut y tester n'importe quel commande JavaScript, voir l'état des variables, etc...</li>
+						<li>On peut également garder une trace du comportement du programme en insérant des commandes <span class="mono">console.log("texte à écrire")</span> dans le code</li>
+					</ul>
+				</section>
+				<section>
+					<h3>La console</h3>
+					<ul class="leftlist">
+						<li>C'est dans la console qu'on peut voir les erreurs qui se sont produites au cours de l'exécution du code sur la page</li>
+						<li>Enfin, la console permet d'explorer les propriétés d'un objet, qui sont proposées par autocomplétion lorsqu'on écrit le nom de l'objet</li>	
+					</ul>
+				</section>
+				
+				<section>
+					<h3>Exercices</h3>
+					<ol class="leftlist">
+						<li><a href="https://jsfiddle.net/vd8xu5z7/2/">Compléter ce code en écrivant la fonction factorielle</a></li>
+						<li>Faites un document comprenant : 
+							<ul class="leftlist">
+								<li>une image de 200*200px (pas d'inspiration ? Justin Bieber)</li>
+								<li>un nombre qui s'incrémente chaque fois qu'on passe la souris sur l'image (mouseover)</li>
+								<li>un nombre qui s'incrémente chaque fois qu'on clique sur le carré</li>
+							</ul>
+						</li>
+						<li>
+							Écrire un script JavaScript qui affiche l'attribut href de tous les liens a contenus dans une page
+						</li>
+					</ol>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

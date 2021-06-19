@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Node.js</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.0.13/css/all.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/js/all.min.js"></script>
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+		<link rel="stylesheet" href="../css/shared.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Node.js</h1>
+					<p>Le JavaScript côté Serveur (back-end)</p>
+				</section>
+				<section>
+					<h3>Node, c'est quoi ?</h3>
+					<p class="left">
+						En 2009, Ryan Dahl a intégré V8, le moteur JavaScript open source de Google Chrome, à un programme en C++, et ce programme s'appelle Node.
+						<br><br>=> Node est un environnement permettant d'exécuter du JavaScript en dehors d'un navigateur.
+					</p>
+				</section>
+
+				<section>
+					<h3>Différences avec le front-end</h3>
+					<ul class="leftlist">
+						<li>Node n'est pas limité par un navigateur web, et peut ainsi explorer le système de fichiers, répondre à des requêtes HTTP, interroger une base de données, etc</li>
+						<li>Les objets <span class="mono">window</span> et <span class="mono">document</span> n'existent pas en back-end. On a accès à de nouveaux objets comme <span class="mono">module</span>, <span class="mono">process</span> ou <span class="mono">global</span></li>
+						<li>Node est un environnement que l'on contrôle : pas de risque ici que le navigateur ne puisse pas interpréter notre code => La manière moderne de coder en JavaScript est généralement utilisée</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Let et Const</h3>
+					<ul class="leftlist">
+						<li>En plus de var, deux autres types de données : variables avec <span class="mono">let</span>, constantes avec <span class="mono">const</span>. La différence entre let et var est le scope : var est défini dans la fonction, let dans le bloc (les {} les plus proches)</li>
+<a href="https://jsfiddle.net/z7rj5hpa/1/" target="_blank">
+<pre><code class="hljs js">function a() {
+  alert('b est ' + b); // ne cause pas d'erreur (et b vaut undefined)
+  alert('c est ' + c); // cause une erreur
+  let c = 'c';
+  var b = 'b';
+}</code></pre></a>
+						<li>On préférera <span class="mono">let</span> à <span class="mono">var</span> dans presque tous les cas, pour éviter <a href="https://jsfiddle.net/6kusbpcg/9/" target="_blank">ce problème classique</a>.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Les arrow functions</h3>
+					<ul class="leftlist">
+						<li>Nouvelle syntaxe pour définir une fonction :</li>
+<pre><code class="hljs js">//fonction à un argument (number)
+const double = number => number * 2;
+
+//fonction à deux arguments
+const multiply = (n1, n2) => n1 * n2;
+</code></pre>
+						<li>pas besoin du mot "function"</li>
+						<li>si et seulement si un seul argument, on peut ne pas mettre les parenthèses</li>
+						<li>si renvoie en une seule ligne, on peut ne pas mettre les accolades ou le mot clé "return"</li>
+					</ul>
+				</section>
+				
+
+				<section>
+					<h3>Les modules Node</h3>
+					<ul class="leftlist">
+						<li>L'objet module est accessible de n'importe quel fichier => tous les fichiers js sont des modules</li>
+						<li>récupérer un module :</li>
+	<pre><code class="hljs js">const module = require('./path/to/module.js');</code></pre>
+						va récupérer l'objet <span class="mono">module.exports</span> du fichier module.js</li>
+						<li>Pour partager du code d'un fichier à l'autre, il faut donc s'assurer que le code en question se trouve dans <span class="mono">module.exports</span></li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Infos accessibles aux modules (fichiers)</h3>
+					<p class="left">Dans node, tous les modules (= fichiers) sont entourés de la fonction suivante :</p>
+<pre><code class="hljs js">(function (exports, require, module, __filename, __dirname) {
+...
+
+})</code></pre>
+					<p class="left">Ainsi, le nom du fichier et du dossier sont accessibles avec <span class="mono">__filename</span> et <span class="mono">__dirname</span>. Par ailleurs, l'objet <span class="mono">process</span> contient entre autre les arguments envoyés en ligne de commande (<span class="mono">process.argv</span>)</p>
+				</section>
+
+				<section>
+					<h3>Quelques modules</h3>
+					<p class="left">Ces modules sont accessibles directement :
+					<ul class="leftlist">
+						<li><span class="mono">fs</span> (pour File System) : pour lire et créer des fichiers et dossiers. Utilisation : </li>
+<pre><code class="hljs js">const fs = require('fs');</code></pre>
+						<li><span class="mono">path</span> : permet de manipuler aisément des chemins (vers un fichier/une URL)</li>
+						<li><span class="mono">http</span> : permet de récupérer des requêtes http et d'y répondre (très bas niveau)</li>
+						<li><a href="https://nodejs.org/dist/latest-v10.x/docs/api/" target="_blank">Documentation sur les modules accessibles par défaut</a></li>
+					</ul>
+				</section>
+				
+				<section>
+					<h3>npm - Node Packet Manager</h3>
+					<ul class="leftlist">
+						<li>Livré avec node</li>
+						<li>Donne accès à des centaines de milliers de modules ! (aucune garantie de qualité)</li>
+						<li>Pour accéder aux modules, il faut un fichier <span class="mono">package.json</span> dans le dossier de notre projet. Pour créer ce fichier, après s'être déplacé dans le dossier de votre projet, lancer la commande dans le terminal :</li>
+<pre><code class="bash">~ npm init --yes</code></pre>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Express</h3>
+					<ul class="leftlist">
+						<li>Express permet de construire une application web en Node.js. Pour installer le package express :</li>
+<pre><code class="bash">~ npm install express</code></pre>
+						<li>Cette commande génère un dossier node_modules, qui contient le code de toutes les (nombreuses) dépendances d'express.<br>
+						=> c'est le bon moment pour créer un fichier <span class="mono">.gitignore</span> contenant la ligne <span class="mono">node_modules</span></li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Hello World!</h3>
+					<p class="left">Entrez ce code dans un fichier index.js dans un dossier où vous avez lancé <span class="mono">npm install express</span>:</p>
+<pre><code class="hljs js">const express = require('express');
+const app = express();
+
+app.get('/', function (req, res) {
+  res.send('Bonjour et bienvenue sur ce site !');
+})
+
+app.listen(3000, function () {
+  console.log('Application qui écoute sur le port 3000!');
+})</code></pre>
+
+					<p class="left">Puis lancez la commande <span class="mono">node index.js</span> (terminal) et ouvrez votre navigateur à <a href="http://localhost:3000/" target="_blank">localhost:3000</a>
+					</p>
+				</section>
+
+				<section>
+					<h3>L'objet app</h3>
+<pre><code class="hljs js">const express = require('express');
+
+const app = express();</code></pre>
+					<p class="left">Par convention, on garde le résultat de la fonction <span class="mono">express()</span> dans un objet nommé <span class="mono">app</span>. C'est par cet objet qu'on va décrire le comportement de notre serveur.</p>
+				</section>
+
+				
+				<section>
+					<h3>app.get</h3>
+<pre><code class="hljs js">app.get('/', function (req, res) {
+  res.send('Bonjour et bienvenue sur ce site !');
+})</code></pre>
+					<p class="left">
+						La méthode <span class="mono">get</span> permet de traiter les requêtes HTTP de type "get". Les autres requêtes HTTP courantes (post, put, delete) suivent le même pattern que get :
+					</p>
+					<ul class="leftlist">
+						<li>Le premier argument est la <strong>route</strong> sur laquelle la requête s'applique. La route <span class="mono">'/'</span> présente dans l'exemple, désigne la <strong>racine</strong> du site web</li>
+						<li>Le second argument est la fonction qui va s'exécuter lorsqu'une requête HTTP est captée sur la route</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Routage</h3>
+					<p class="left">
+						Les routes correspondent à une URL sur laquelle se rend l'utilisateur, mais peuvent également être considérées comme des noms de fonctions qui peuvent être appelées par du JavaScript côté client.
+					</p>
+					<p class="left">
+						Par exemple, on peut imaginer une route nommée /deleteUser à laquelle on peut adresser des requêtes de type delete.
+					</p>
+				</section>
+
+				<section>
+					<h3>Règles de routage</h3>
+
+					<ul class="leftlist">
+						<li>Une route commence toujours par la racine '/'</li>
+						<li>Si on le souhaite, on peut spécifier la route par une expression régulière, <a href="https://expressjs.com/fr/guide/routing.html#route-paths">on peut voir les règles ici</a>.</li>
+						<li>
+							On peut également envoyer des paramètres variables dans la route, en précedant le paramètre par <span class="mono">':'</span>
+						</li>
+					</ul>
+<pre><code class="hljs js">app.post('/inscription/:registrationType', function(req, res) {
+  // on récupère la valeur du paramètre avec req.params
+  let regType = req.params.registrationType;
+  ...
+})</code></pre>
+				</section>
+
+				<section>
+					<h3>req</h3>
+					<p class="left">
+						Le second argument des méthodes <span class="mono">app.get</span>, <span class="mono">app.post</span>, etc est une fonction anonyme qui prend toujours au moins 2 paramètres, qu'on appelle <span class="mono">req</span> et <span class="mono">res</span> par convention.
+					</p>
+					<p class="left">
+						<span class="mono">req</span> vient de request (requête), contient beaucoup d'informations, notamment sur l'utilisateur, par exemple son OS et son navigateur qu'on peut voir dans la propriété <span class="mono">req.headers['user-agent']</span>
+					</p>
+				</section>
+				
+				<section>
+					<h3>res</h3>
+					<p class="left">
+						<span class="mono">res</span> vient de response (réponse), c'est à travers les méthodes de l'objet <span class="mono">res</span> qu'on va envoyer une réponse à l'utilisateur, en général sous la forme de contenu HTML mais on peut renvoyer tout type de données.</span>
+					</p>
+					<p class="left">
+						Seul une réponse envoyée avec res va mettre fin au routage. Les routes sont parcourues séquentiellement de haut en bas dans le fichier jusqu'à ce qu'une réponse soit envoyée.
+					</p>
+				</section>
+
+				<section>
+					<h3>Les différents types de réponse</h3>
+
+					<ul class="leftlist">
+						<li>On renvoie généralement une réponse avec <span class="mono">res.send(var_contenant_du_html)</span></li>
+						<li>On peut renvoyer un fichier quelconque avec <span class="mono">res.sendFile(__dirname + '/path/to/file.ext')</span></li>
+						<li>On renvoie un statut avec <span class="mono">res.sendStatus(...)</span>. Le fameux statut 404 est la réponse attendue lorsque ce qui est cherché n'est pas trouvé</li>
+				</section>
+
+				<section>
+					<h3>next</h3>
+<pre><code class="hljs js">app.get('/log', function (req, res, next) {
+  console.log('je ne fais que passer sur la route log !');
+  next();
+})</code></pre>
+					<p class="left">
+						La fonction anonyme peut prendre, en plus de <span class="mono">req</span> et <span class="mono">res</span>, un troisième argument, <span class="mono">next</span>, une fonction qui peut être appelée lorsqu'on ne renvoie pas de réponse pour continuer à explorer les routes suivantes.
+					</p>
+				</section>
+
+				<section>
+					<h3>Exercice : votre premier routeur</h3>
+					<p class="left">
+						Écrivez un fichier index.js qui va utiliser express pour écouter sur le port 3000, et lorsqu'on fait une requête get (= l'utilisateur va sur une URL quelconque commençant par <a href="localhost:3000">localhost:3000)</a>, va avoir les comportements décrits dans la slide suivante.
+					</p>
+				</section>
+
+				<section>
+					<ul class="leftlist">
+						<li>
+							Quelque soit la requête, on fait un console.log de req.headers['user-agent']
+						</li>
+						<li>
+							Si l'utilisateur va sur /image, on lui renvoie une image (de votre choix). NB : pour renvoyer un fichier, il faut toujours inclure __dirname avant le chemin relatif du fichier. 
+						</li>
+						<li>
+							Si l'utilisateur va sur /blabla/:..., on lui renvoie une string contenant notamment ce qu'il y a dans l'Url après blabla
+						</li>
+						<li>
+							Si l'utilisateur va sur /contenu, on lui renvoie un fichier HTML local
+						</li>
+						<li>
+							Dans tous les autres cas : res.sendStatus(404)
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Les templates</h3>
+					<p class="left">
+						Pour renvoyer un fichier HTML susceptible de changer selon les données que possède notre serveur, on utilise soit un framework (comme vue ou react), soit des templates. Les templates sont des fichiers qui ne sont pas envoyés tels quels à l'utilisateur, ils doivent en quelque sorte être compilés ('rendered' en anglais). Une fois compilés, ils contiennent bien du HTML, mais le contenu précis sera déterminé par les données du serveur.
+					</p>
+				</section>
+
+				<section>
+					<h3>Les moteurs de templates</h3>
+					<p class="left">Il existe plusieurs moteurs de templates, dont : </p>
+					<ul class="leftlist">
+						<li><span class="mono">pug</span>, qui minimise la quantité de code à écrire, mais dont la syntaxe est assez éloignée de celle du HTML</li>
+						<li><span class="mono">handlebars</span>, qui ajoute simplement des tags à un contenu HTML</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Handlebars</h3>
+					<p class="left">Installation :</p>
+<pre><code class="bash">~ npm install express-handlebars</code></pre>
+					<p class="left">Configuration pour l'utilisation dans Node :</p>
+<pre><code class="hljs js">const hbs = require('express-handlebars');
+/*
+  - extname : extension des fichiers handlebars (par défaut, .handlebars)
+  - defaultLayout : le nom du fichier.hbs qui sera rendered, doit contenir {{{ body }}}
+  - layoutsDir : chemin du dossier contenant les layouts 
+*/
+
+app.engine('hbs', hbs({
+  extname: 'hbs',
+  defaultLayout: 'racine',
+  layoutsDir: __dirname + '/views/',
+}));
+app.set('view engine', 'hbs');</code></pre>
+				</section>
+
+				<section>
+					<h3>Les tags handlebars</h3>
+					<ul class="leftlist">
+						<li><span class="mono">{{ tag }}</span> : si tag entre 2 accolades contient des balises HTML, celles-ci seront écrites comme du texte</li>
+						<li><span class="mono">{{{ tag }}}</span> : si un tag entre 3 accolades contient des balises HTML, celles-ci seront incluses comme des éléments HTML</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>defaultLayout</h3>
+<pre><code class="hljs html">&lt;!DOCTYPE html&gt;
+&lt;html&gt; 
+ &lt;head&gt; 
+   &lt;meta charset="utf-8"&gt;
+   &lt;title&gt;{{ title }}&lt;/title&gt; 
+ &lt;/head&gt;
+ &lt;body&gt; 
+   &lt;h1&gt;{{ title }}&lt;/h1&gt; 
+   {{{ body }}} 
+ &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+					<ul class="leftlist">
+						<li>Il est nécessaire d'avoir un fichier qui sert de 'defaultLayout', qui DOIT contenir un tag {{{ body }}} (ou {{ body }})</li>
+						<li>Le HTML "compilé" avec render s'incluera à la place de ce {{{ body }}}</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>res.render</h3>
+<pre><code class="hljs js">app.get('/hello', function (req, res) {
+  let data = {
+    title: 'Titre'
+  }
+  res.render('sayHello.hbs', data);
+}</code></pre>
+				<p class="left">Si les données (data) contiennent les valeurs nommées par des tags dans le fichier handlebars (dans l'exemple, sayHello.hbs) ou le defaultLayout, les tags seront remplaçés par ces valeurs.</p>
+				</section>
+
+				<section>
+					<h3>Conditions et itérations</h3>
+				
+<pre><code class="hljs js">{{# if condition}}
+  ...
+{{ else }}
+  ...
+{{/if}}
+
+{{# each myArray}}
+  <div class="arrayElt"> {{ this }} </div>
+{{/each}}
+</code></pre>
+	  				<p class="left">Le mot clé réservé <span class="mono">this</span> contient successivement la valeur de chaque élément du tableau</p>
+	  			</section>
+
+	  			<section>
+	  				<h3>Exercice Handlebars</h3>
+	  				<p class="left">Écoutez les routes : </p>
+	  				<ul class="leftlist">
+	  					<li><span class="mono">app.get('/play/pile', ...)</span></li>
+	  					<li><span class="mono">app.get('/play/face', ...)</span></li>
+	  				</ul>
+	  				<p class="left">Sélectionnez 'pile' ou 'face' au hasard (regardez l'effet de la fonction Math.random() ), et renvoyez le rendering d'un même template comprenant :</p>
+					<ul class="leftlist">
+	  					<li>Le choix du joueur (selon la route pile ou face)</li>
+	  					<li>Le résultat déterminé au hasard</li>
+	  					<li>Si le joueur a gagné ou perdu</li>
+	  				</ul>
+	  				
+	  			</section>
+				
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
